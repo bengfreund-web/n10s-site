@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://n10srugby.github.io/sitemap.xml
