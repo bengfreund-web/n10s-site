@@ -78,21 +78,6 @@
         <img class="hero-poster" src="assets/hero-poster.webp" alt="" aria-hidden="true">
       </div>
 
-      <canvas id="scanCanvas" aria-hidden="true"></canvas>
-
-      <svg id="hud" aria-hidden="true" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%"   stop-color="#ffffff" stop-opacity="0"/>
-            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.18"/>
-          </linearGradient>
-        </defs>
-        <g id="hudBrackets"></g>
-        <g id="hudTicks"></g>
-        <g id="hudScan"></g>
-        <g id="hudLabel"></g>
-      </svg>
-
       <div class="hero-scrim" id="heroScrim"></div>
 
       <!-- Copy is in the DOM at all times and never hidden from AT; it is
@@ -159,7 +144,7 @@
     </div>
   </section>
 
-  <div class="photo-band reveal" style="margin-top:78px;">
+  <div class="photo-band photo-band-small reveal">
     <img src="img/action-1.jpg" alt="A youth rugby player breaks away with the ball in hand during a match" loading="lazy">
   </div>
 
@@ -189,6 +174,19 @@
     </div>
   </section>
 
+
+  <section id="cost" class="section section-alt cost-section">
+    <div class="wrap">
+      <p class="eyebrow reveal">Entry Fee</p>
+      <h2 class="reveal">What It Costs</h2>
+      <div class="cost-card reveal">
+        <p class="cost-amount">$495<span>per team</span></p>
+        <p class="cost-note">Covers entry for one team across both days. Travel, lodging and
+        meals are not included. Payment is taken at registration, not with the expression of
+        interest &mdash; that stays free.</p>
+      </div>
+    </div>
+  </section>
 
   <figure class="photo-band photo-figure reveal">
     <img src="img/bozeman-sports-park.jpg"
@@ -228,7 +226,7 @@
   <section id="interest" class="section form-section">
     <div class="wrap">
       <p class="eyebrow reveal">Register Interest</p>
-      <h2 class="reveal">Secure Your Program's Spot</h2>
+      <h2 class="reveal">Expression of Interest</h2>
       <p class="lede reveal">Free, and not a commitment to enter. It puts your program first in line for registration details.</p>
 
       <form class="eoi-form reveal" id="eoiForm" novalidate>
@@ -313,7 +311,7 @@
       <!-- Shown in place of the form until FORM_ENDPOINT is set in js/main.js.
            A live button rather than a notice, so the section still converts. -->
       <div class="form-fallback" id="formFallback" hidden>
-        <a class="btn btn-primary" href="mailto:jd@sportmontana.org?subject=N10s%202027%20%E2%80%94%20Expression%20of%20Interest&amp;body=Club%20or%20school%3A%0ACity%20and%20state%3A%0ARole%3A%0ADivision%20(Middle%20School%20Boys%20%2F%20U16-JV%20Boys%20%2F%20Both)%3A%0AEstimated%20number%20of%20teams%3A%0APhone%3A%0AAnything%20we%20should%20know%3F%3A">Register Interest</a>
+        <a class="btn btn-primary" href="mailto:jd@sportmontana.org?subject=N10s%202027%20%E2%80%94%20Expression%20of%20Interest&amp;body=Club%20or%20school%3A%0ACity%20and%20state%3A%0ARole%3A%0ADivision%20(Middle%20School%20Boys%20%2F%20U16-JV%20Boys%20%2F%20Both)%3A%0AEstimated%20number%20of%20teams%3A%0APhone%3A%0AAnything%20we%20should%20know%3F%3A">Expression of Interest</a>
       </div>
     </div>
   </section>

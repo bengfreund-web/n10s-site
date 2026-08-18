@@ -25,31 +25,31 @@ reports/              sharpness.csv, loop-candidates.json from prep.py
 
 ## Hero scroll sequence
 
-A 400vh track (200vh under 768px) with a sticky 100svh pin. One normalised
+A 200vh track (150vh under 768px) with a sticky 100svh pin. One normalised
 progress value drives four stages, all thresholds named at the top of
 `js/hero-sequence.js`:
 
 | Stage | p | What happens |
 |---|---|---|
-| A | 0.00–0.20 | Footage only. Scroll cue, no text, no scrim. |
-| B | 0.20–0.45 | Scrim fades up, heading lines enter staggered; scan reveal runs. |
-| C | 0.45–0.75 | Info links enter on the same rhythm; heading lifts to make room. |
-| D | 0.75–1.00 | Hero fades and scales down, page rises over it, pin releases. |
+| A | 0.00–0.08 | Footage only. Scroll cue, no text, no scrim. |
+| B | 0.08–0.34 | Scrim fades up, heading lines enter staggered. |
+| C | 0.34–0.62 | Info links enter on the same rhythm; heading lifts to make room. |
+| D | 0.62–1.00 | Hero fades and scales down, page rises over it, pin releases. |
+
+Stage A is deliberately short — roughly 8vh of scroll — so the footage plays
+clean for a moment and the type arrives on the first nudge.
 
 Only `transform` and `opacity` are animated. Scroll is throttled through
 requestAnimationFrame and layout is never read in the handler — geometry is
 cached in `measure()` on resize.
 
-**Scan reveal.** One `<video>` plus one `<canvas>` (never two stacked videos —
-they drift). Per frame the canvas draws the video, clips to a focus region,
-and applies contrast → duotone → Sobel edges; everything outside the region
-stays transparent. An SVG HUD adds corner brackets, edge ticks, a scan line
-tied to scroll position, and a monospace label. `FOCUS_REGIONS` is an array of
-normalised `{x,y,w,h}` rects that cycle across stage B.
+**Scan reveal: removed.** The hero previously ran a canvas duotone + Sobel
+treatment with an SVG HUD over one region of the frame. It read as a glitchy
+box over the grass and was cut, along with its canvas, HUD and render loop.
+It is in git history (`4de8e1c` and earlier) if it is ever wanted back.
 
-**Budgets.** Canvas loop capped at 30fps, rendered at half resolution and
-upscaled by CSS, and killed entirely outside stage B, when the tab is hidden,
-or when the hero leaves the viewport. The video pauses once fully covered.
+**Budgets.** The video pauses once fully covered, when the tab is hidden, or
+when the hero leaves the viewport.
 
 **Fallbacks.** `prefers-reduced-motion` and Save-Data / 2g-3g get the poster
 still. The small-screen gate is off by default (`POSTER_ONLY_UNDER_BP`), so
@@ -181,7 +181,9 @@ All generated from `~/Downloads/National 10s Logo.png`. Regenerating them needs 
 
 ## Known gaps
 
-- **Photos.** Only one usable photo shipped. The other two in the varsity/TRY libraries show
+- **Photos.** The venue stills are frames pulled from the flyover (hero poster t=10.00s, the
+  Bozeman Sports Park photo t=50.00s) because every venue image in Downloads carries GNC
+  branding. Only one match photo shipped. The other two in the varsity/TRY libraries show
   girls' teams, which conflicts with boys-only 2027 divisions. Needs 3–5 boys middle school /
   U16 match and sideline shots, plus a Bozeman or mountain backdrop.
 - **Analytics.** No tag on the page. The varsity site has none to carry over, so a property has
