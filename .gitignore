@@ -10,3 +10,6 @@ assets/flyover-source.mp4
 # "scale to 1920" rung is a no-op and we never upscale. Nothing loads it — the
 # sub-1280px tier uses hero-1280.*. prep.py still regenerates it.
 assets/hero-1080.mp4
+
+# Self-contained share build (~7 MB); regenerate with scripts/build-preview.py
+build/

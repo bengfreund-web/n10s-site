@@ -11,7 +11,7 @@ first thing under the hero is a four-fact row — **format, age groups, cost,
 location** — and each card links to the section that answers it in full.
 Depth increases as you scroll:
 
-`Basics → Divisions → Entry Fee → Expression of Interest → Plan Your Trip → FAQ`
+`Basics → Divisions → Squad Size → Entry Fee → Expression of Interest → Plan Your Trip → FAQ`
 
 Photos sit outside that path so they never interrupt the scan: the match shot
 breaks the page after the form, and the venue photo lives inside Plan Your
@@ -23,7 +23,7 @@ css/styles.css        brand tokens + all styles
 js/main.js            nav, scroll progress, reveal-on-scroll, interest form
 js/hero-sequence.js   pinned video hero: stages, scan reveal, HUD
 prep.py               footage analysis + encoding ladder
-scripts/              Google Apps Script endpoint for the form (not served)
+scripts/              Apps Script form endpoint; build-preview.py; preview fonts
 img/                  logo, icons, OG image, photos
 assets/               hero footage, poster stills, encodes (large ones gitignored)
 reports/              sharpness.csv, loop-candidates.json from prep.py
@@ -111,6 +111,23 @@ and it is gitignored; the sub-1280px tier uses `hero-1280.*`.
 
 Encoded durations come out at 8.78s rather than 8.75s — frame quantisation at
 29.97fps (263 frames).
+
+## Shareable preview build
+
+```bash
+python3 scripts/build-preview.py    # -> build/n10s-preview.html (~7 MB)
+```
+
+Inlines CSS, JS, fonts, images and one video rung into a single file for
+sharing as a link, since the share target blocks external requests. It
+deliberately differs from the deployed site: one 1280-wide H.264 rung instead
+of the four-file ladder (AV1 is patchy in Safari and a shared link has to play
+anywhere), downscaled photos, and Oswald/Poppins woff2 inlined from
+`scripts/preview-fonts/` rather than linked from Google Fonts. The script
+fails loudly if any external reference survives or the file exceeds 16 MB.
+
+Note the mailto CTA may not fire inside an embedded frame — the preview is for
+reviewing design and content, not a working signup.
 
 ## Local preview
 
