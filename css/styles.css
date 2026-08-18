@@ -280,6 +280,138 @@ p { margin: 0 0 1em; }
   margin-bottom: 2em;
 }
 
+.hero-date {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.4vw, 2.35rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin: 0 0 0.15em;
+}
+
+.hero-date span { color: var(--accent); }
+
+.hero-location {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+.hero-divider {
+  width: 88px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--accent);
+  margin: 26px 0 24px;
+}
+
+/* ---------- Stats bar ---------- */
+
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--primary-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 26px 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+}
+
+.stat:first-child { border-left: none; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  line-height: 1;
+  color: var(--accent);
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- About badges ---------- */
+
+.badge-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-top: 2.75rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.badge { display: flex; gap: 16px; }
+
+.badge .icon-badge { flex-shrink: 0; margin-bottom: 0; }
+
+.badge h3 {
+  font-size: 1.15rem;
+  color: var(--primary);
+  margin-bottom: 0.3em;
+}
+
+.badge p {
+  color: var(--gray);
+  font-size: 0.94rem;
+  margin: 0;
+}
+
+/* ---------- Card links (arrow CTAs) ---------- */
+
+.card-link {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent-text);
+}
+
+a.card-link:hover { text-decoration: underline; }
+
+.card-link.is-pending {
+  color: var(--gray);
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* ---------- Resources / Plan Your Trip ---------- */
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 2.25rem;
+}
+
+.resource {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px 24px;
+}
+
+.resource h3 { color: var(--primary); font-size: 1.25rem; margin-bottom: 0.35em; }
+.resource p { color: var(--gray); font-size: 0.94rem; }
+
 /* ---------- Sections ---------- */
 
 .section { padding: 78px 0; }
@@ -396,7 +528,7 @@ p { margin: 0 0 1em; }
 }
 
 .step h3 { color: var(--primary); }
-.step p { color: var(--gray); font-size: 0.96rem; margin-bottom: 0; }
+.step p { color: var(--gray); font-size: 0.96rem; margin-bottom: 0.9em; }
 
 /* ---------- Photo band ---------- */
 
@@ -601,14 +733,39 @@ p { margin: 0 0 1em; }
 .site-footer {
   background: var(--primary-dark);
   color: rgba(255, 255, 255, 0.85);
-  padding: 60px 0 0;
+  padding: 0 0 0;
   border-top: 5px solid var(--accent);
+}
+
+.footer-event {
+  padding-top: 44px;
+  padding-bottom: 34px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer-event-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin: 0 0 0.2em;
+}
+
+.footer-event-sub {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
 }
 
 .footer-inner {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1.4fr 1fr 1fr;
   gap: 48px;
+  padding-top: 44px;
   padding-bottom: 44px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -622,51 +779,36 @@ p { margin: 0 0 1em; }
   font-size: 0.92rem;
   color: rgba(255, 255, 255, 0.7);
   max-width: 46ch;
+  margin: 0;
 }
 
 .footer-brand a { color: var(--accent); }
 .footer-brand a:hover { text-decoration: underline; }
 
-.footer-contact h3 {
+.footer-col h3 {
   font-family: var(--font-display);
   font-style: italic;
   font-size: 1.15rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--accent);
-  margin-bottom: 0.7em;
+  margin-bottom: 0.8em;
 }
 
-.footer-contact dl {
-  margin: 0 0 20px;
+.footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  gap: 10px;
+  gap: 9px;
 }
 
-.footer-contact dl > div {
-  display: flex;
-  gap: 10px;
-  font-size: 0.92rem;
+.footer-col a {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.72);
 }
 
-.footer-contact dt {
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
-  min-width: 62px;
-}
-
-.footer-contact dd { margin: 0; color: rgba(255, 255, 255, 0.85); }
-.footer-contact dd a:hover { color: var(--accent); }
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 18px;
-  font-size: 0.88rem;
-}
-
-.footer-links a { color: rgba(255, 255, 255, 0.72); }
-.footer-links a:hover { color: var(--accent); }
+.footer-col a:hover { color: var(--accent); }
 
 .footer-bottom {
   padding: 20px 24px;
@@ -682,6 +824,8 @@ p { margin: 0 0 1em; }
 @media (max-width: 860px) {
   .card-grid.two { grid-template-columns: 1fr; }
   .step-grid { grid-template-columns: 1fr; }
+  .badge-row { grid-template-columns: 1fr; gap: 22px; }
+  .resource-grid { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; gap: 36px; }
 }
 
@@ -720,6 +864,13 @@ p { margin: 0 0 1em; }
 
   .hero { padding: 56px 0 64px; }
   .hero-mark { margin-bottom: 24px; }
+  .hero-divider { margin: 20px 0 18px; }
+
+  .stats-bar { grid-template-columns: 1fr 1fr; }
+  .stat { padding: 20px 10px; }
+  .stat:nth-child(2) { border-left: 1px solid rgba(255, 255, 255, 0.1); }
+  .stat:nth-child(3) { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .stat:nth-child(4) { border-top: 1px solid rgba(255, 255, 255, 0.1); }
 
   .section { padding: 54px 0; }
 

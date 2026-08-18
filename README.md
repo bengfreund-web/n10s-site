@@ -6,6 +6,11 @@ Bozeman, Montana. An event of the Montana Institute of Sport.
 Built on the same static pattern as `varsity-rugby-site`: plain HTML/CSS/JS, no build step,
 deployed from the repo root via GitHub Pages.
 
+Copy and page structure follow the GNC 2027 page (`~/Downloads/GNC_2027.html`) — big date/location
+hero block over a divider and one-line positioning statement, a four-stat bar, section
+label + Title Case headline pairs, three about badges, arrow-link action cards, a
+"Resources / Plan Your Trip" block, and an event line + link columns in the footer.
+
 ```
 index.html          the whole page
 css/styles.css      brand tokens + all styles
@@ -96,5 +101,9 @@ All generated from `~/Downloads/National 10s Logo.png`. Regenerating them needs 
   to be created first.
 - **Socials.** Footer has no social links — no accounts identified yet.
 - **Contact email.** Using `jd@sportmontana.org` per the plan; swap if a dedicated address is set up.
+- **GNC cross-promo.** The About section now mentions the Great Northwest Challenge by name (same
+  valley, each summer). If that link should be stronger — a footer link to
+  greatnorthwestchallenge.com, or a "sister event" band — say so; if it should be weaker, that one
+  sentence is the only reference.
 - **FAQ answers** for cost, format, and sanctioning are placeholders pending confirmed details
   (Phase 2).
