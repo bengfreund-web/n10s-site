@@ -51,8 +51,10 @@ normalised `{x,y,w,h}` rects that cycle across stage B.
 upscaled by CSS, and killed entirely outside stage B, when the tab is hidden,
 or when the hero leaves the viewport. The video pauses once fully covered.
 
-**Fallbacks.** `prefers-reduced-motion`, Save-Data / 2g-3g, and viewports under
-768px all get the poster still: the `<source>` elements are detached so nothing
+**Fallbacks.** `prefers-reduced-motion` and Save-Data / 2g-3g get the poster
+still. The small-screen gate is off by default (`POSTER_ONLY_UNDER_BP`), so
+phones play the video too — on the smaller `hero-1280` rung. Flip it to `true`
+to save mobile data. In poster-only mode: the `<source>` elements are detached so nothing
 downloads at all. Hero copy is in the DOM at all times and only ever
 transformed, so keyboard and screen reader users get everything without
 scrolling; there is a skip link, and focused hero links are forced visible
@@ -84,16 +86,18 @@ Encoded ladder, against a stream copy of the same window (7.62 MB):
 
 | file | size | vs slice | served to |
 |---|---|---|---|
-| `hero.av1.webm` | 10.90 MB | 143% | ≥1280px, first choice |
-| `hero.h264.mp4` | 12.01 MB | 158% | ≥1280px, fallback |
-| `hero-1280.av1.webm` | 2.77 MB | 36% | <1280px, first choice |
-| `hero-1280.mp4` | 3.48 MB | 46% | <1280px, fallback |
-| `hero-1080.mp4` | 12.01 MB | 158% | nothing — gitignored duplicate |
+| `hero.av1.webm` | 13.48 MB | 177% | ≥1280px, first choice |
+| `hero.h264.mp4` | 15.12 MB | 198% | ≥1280px, fallback |
+| `hero-1280.av1.webm` | 4.24 MB | 56% | <1280px, first choice |
+| `hero-1280.mp4` | 6.52 MB | 86% | <1280px, fallback |
+| `hero-1080.mp4` | 12.01 MB | 158% | nothing — gitignored |
 
-The two full-res rungs are still bigger than the source slice: at CRF 28 / 18
-the encoder spends bits preserving the master's own compression artifacts.
-Raising them in `LADDER` (AV1 ~34–36, x264 ~23) roughly halves both with no
-visible loss on a muted background loop — a one-line change per rung.
+CRFs are AV1 24 / x264 16 at full res and AV1 30 / x264 20 at 1280. The 1280
+rung was lifted hardest because the hero now plays on small screens too, so
+that tier is what most viewports actually see. Quality is capped by the master
+(a 4.5 Mbps 1080p delivery file) — lowering CRF further mostly preserves its
+existing compression artifacts rather than adding detail. A sharper hero needs
+a better master, not a lower CRF.
 
 `hero-1080.mp4` is byte-for-byte identical to `hero.h264.mp4`: the source is
 1920 wide, the rung asks for 1920 wide, and we never upscale. Nothing loads it
@@ -127,7 +131,7 @@ Sampled from the logo, defined at the top of `css/styles.css`:
 `--accent-text` exists for that. Primary buttons are forest fill / white text with a bright-green
 inset left border; the reverse (bright green fill, white text) does not pass and is not used.
 
-Type: Barlow Condensed italic for display/headings and eyebrows, Poppins for body.
+Type: Oswald (condensed, upright) for display/headings and eyebrows, Poppins for body.
 
 ## Wiring up the interest form
 

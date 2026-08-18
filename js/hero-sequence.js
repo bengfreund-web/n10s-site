@@ -67,7 +67,8 @@
   const SOBEL_FLOOR     = 96;     /* edges weaker than this are discarded */
   const SOBEL_MAX_MIX   = 0.5;    /* edges never fully replace the base colour */
 
-  const MOBILE_BP       = 768;    /* poster-only below this width */
+  const MOBILE_BP            = 768;    /* "small screen" threshold */
+  const POSTER_ONLY_UNDER_BP = false;  /* true = poster still below MOBILE_BP */
 
   /* ====================================================================== */
 
@@ -104,8 +105,13 @@
     return ["slow-2g", "2g", "3g"].indexOf(c.effectiveType) !== -1;
   }
 
+  /* Poster-only is now reserved for genuine constraints. The width gate is
+     off by default (POSTER_ONLY_UNDER_BP = false) so the hero plays on phones
+     and narrow windows too — they get the smaller hero-1280 rung, not the
+     full-res pair. Flip it back to true to save mobile data. */
   function posterOnly() {
-    return mqReduce.matches || saveData() || window.innerWidth < MOBILE_BP;
+    return mqReduce.matches || saveData() ||
+           (POSTER_ONLY_UNDER_BP && window.innerWidth < MOBILE_BP);
   }
 
   /* Reduced motion also flattens every stage to a plain opacity fade. */

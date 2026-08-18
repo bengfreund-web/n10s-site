@@ -67,13 +67,13 @@ LADDER = [
     {
         "name": "hero.av1.webm",
         "width": None,
-        "args": ["-c:v", "libsvtav1", "-crf", "28", "-preset", "6",
+        "args": ["-c:v", "libsvtav1", "-crf", "24", "-preset", "5",
                  "-pix_fmt", "yuv420p", "-svtav1-params", "tune=0"],
     },
     {
         "name": "hero.h264.mp4",
         "width": None,
-        "args": ["-c:v", "libx264", "-crf", "18", "-preset", "slow",
+        "args": ["-c:v", "libx264", "-crf", "16", "-preset", "slow",
                  "-pix_fmt", "yuv420p", "-movflags", "+faststart"],
     },
     {
@@ -92,13 +92,13 @@ LADDER = [
     {
         "name": "hero-1280.av1.webm",
         "width": 1280,
-        "args": ["-c:v", "libsvtav1", "-crf", "36", "-preset", "6",
+        "args": ["-c:v", "libsvtav1", "-crf", "30", "-preset", "5",
                  "-pix_fmt", "yuv420p"],
     },
     {
         "name": "hero-1280.mp4",
         "width": 1280,
-        "args": ["-c:v", "libx264", "-crf", "24", "-preset", "slow",
+        "args": ["-c:v", "libx264", "-crf", "20", "-preset", "slow",
                  "-pix_fmt", "yuv420p", "-movflags", "+faststart"],
     },
 ]
