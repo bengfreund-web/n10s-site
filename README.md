@@ -6,10 +6,16 @@ Bozeman, Montana. An event of the Montana Institute of Sport.
 Built on the same static pattern as `varsity-rugby-site`: plain HTML/CSS/JS, no build step,
 deployed from the repo root via GitHub Pages.
 
-Copy and page structure follow the GNC 2027 page (`~/Downloads/GNC_2027.html`) — big date/location
-hero block over a divider and one-line positioning statement, a four-stat bar, section
-label + Title Case headline pairs, three about badges, arrow-link action cards, a
-"Resources / Plan Your Trip" block, and an event line + link columns in the footer.
+Page order is built for one reader: a coach deciding whether to enter. The
+first thing under the hero is a four-fact row — **format, age groups, cost,
+location** — and each card links to the section that answers it in full.
+Depth increases as you scroll:
+
+`Basics → Divisions → Entry Fee → Expression of Interest → Plan Your Trip → FAQ`
+
+Photos sit outside that path so they never interrupt the scan: the match shot
+breaks the page after the form, and the venue photo lives inside Plan Your
+Trip, where location questions get answered.
 
 ```
 index.html            the whole page

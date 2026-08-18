@@ -481,33 +481,6 @@ body.poster-only .hero-poster { display: block; }
 
 /* When the badges lead a section there is no headline above them, so the
    top rule and its spacing would hang in mid-air. */
-.badge-row-lead { margin-top: 0 !important; padding-top: 0 !important; border-top: none !important; }
-
-.badge-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
-  margin-top: 2.75rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--line);
-}
-
-.badge { display: flex; gap: 16px; }
-
-.badge .icon-badge { flex-shrink: 0; margin-bottom: 0; }
-
-.badge h3 {
-  font-size: 1.15rem;
-  color: var(--primary);
-  margin-bottom: 0.3em;
-}
-
-.badge p {
-  color: var(--gray);
-  font-size: 0.94rem;
-  margin: 0;
-}
-
 /* ---------- Card links (arrow CTAs) ---------- */
 
 .card-link {
@@ -693,23 +666,6 @@ a.card-link:hover { text-decoration: underline; }
 
 /* ---------- Statement ---------- */
 
-.statement-section {
-  padding: 60px 0;
-  background: var(--primary-dark);
-}
-
-.statement {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--white);
-  text-align: center;
-  margin: 0;
-}
-
-.statement em { color: var(--accent); font-style: normal; }
-
 /* ---------- Interest form ---------- */
 
 .form-section { background: var(--off-white); }
@@ -816,19 +772,20 @@ a.card-link:hover { text-decoration: underline; }
   color: #7c2412;
 }
 
+/* Stands in for the form until FORM_ENDPOINT is set. It holds a single
+   button, so no card chrome — the button is the whole message. */
 .form-fallback {
   margin-top: 2rem;
-  padding: 22px 24px;
-  background: var(--white);
-  border: 1px solid var(--line);
-  border-left: 4px solid var(--accent);
-  border-radius: var(--radius);
   max-width: 760px;
 }
 
 .form-fallback p:last-child { margin-bottom: 0; }
-.form-fallback a { color: var(--accent-text); font-weight: 600; }
-.form-fallback a:hover { text-decoration: underline; }
+
+/* Scoped away from .btn: a bare `.form-fallback a` rule outranks
+   `.btn-primary { color: var(--white) }` and rendered the button label in
+   dark green on forest green. */
+.form-fallback a:not(.btn) { color: var(--accent-text); font-weight: 600; }
+.form-fallback a:not(.btn):hover { text-decoration: underline; }
 
 /* ---------- FAQ ---------- */
 
@@ -968,7 +925,6 @@ a.card-link:hover { text-decoration: underline; }
 @media (max-width: 860px) {
   .card-grid.two { grid-template-columns: 1fr; }
   .step-grid { grid-template-columns: 1fr; }
-  .badge-row { grid-template-columns: 1fr; gap: 22px; }
   .resource-grid { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr; gap: 36px; }
 }
@@ -1010,11 +966,6 @@ a.card-link:hover { text-decoration: underline; }
   .hero-mark { margin-bottom: 24px; }
   .hero-divider { margin: 20px 0 18px; }
 
-  .stats-bar { grid-template-columns: 1fr 1fr; }
-  .stat { padding: 20px 10px; }
-  .stat:nth-child(2) { border-left: 1px solid rgba(255, 255, 255, 0.1); }
-  .stat:nth-child(3) { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); }
-  .stat:nth-child(4) { border-top: 1px solid rgba(255, 255, 255, 0.1); }
 
   .section { padding: 54px 0; }
 
@@ -1066,3 +1017,107 @@ a.card-link:hover { text-decoration: underline; }
   color: var(--gray);
   max-width: 54ch;
 }
+
+/* ---------- The Basics: four-fact row under the hero ----------
+   Summary only — one line per fact. Each card links down to the section that
+   answers it in full, so this never becomes a second copy of the content. */
+
+.basics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 2rem;
+}
+
+.basic {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 24px 22px;
+  background: var(--off-white);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+}
+
+.basic:hover,
+.basic:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(27, 61, 0, 0.10);
+  border-color: var(--accent-text);
+  border-left-color: var(--accent);
+}
+
+.basic-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.basic-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.1;
+  color: var(--primary);
+}
+
+.basic-note {
+  font-size: 0.88rem;
+  color: var(--gray);
+  line-height: 1.45;
+}
+
+@media (max-width: 900px) {
+  .basics-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 520px) {
+  .basics-grid { grid-template-columns: 1fr; gap: 12px; }
+  .basic { padding: 18px 18px; }
+}
+
+/* The venue photo now lives inside Plan Your Trip */
+#resources .photo-figure { padding: 0; margin-bottom: 2.25rem; }
+
+/* Two-step explainer above the interest form */
+.enter-steps {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  max-width: 62ch;
+  counter-reset: step;
+}
+
+.enter-steps li {
+  position: relative;
+  padding-left: 40px;
+  color: var(--gray);
+  font-size: 0.98rem;
+  counter-increment: step;
+}
+
+.enter-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.enter-steps strong { color: var(--primary); font-weight: 600; }
