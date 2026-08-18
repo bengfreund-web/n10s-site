@@ -47,6 +47,20 @@ PHASECORR_WIDTH = 512           # downscale width for the shake/motion estimate
 POSTER_JPEG_Q = 92
 POSTER_WEBP_Q = 90
 
+# --- CHOSEN HERO LOOP ------------------------------------------------------
+# Picked from the Step 1b candidates (score 0.997: highest median sharpness,
+# near-lowest shake). Set both to None to encode the full source again.
+LOOP_IN, LOOP_OUT = 10.00, 18.75
+
+# Where the poster frame comes from once a loop is set:
+#   "loop-start"       first frame of the loop — no jump when playback starts
+#   "sharpest-in-loop" sharpest sample inside the window
+#   "sharpest-overall" sharpest sample anywhere in the source
+# loop-start is the default: the poster is what a video client sees for the
+# instant before playback, so matching frame one matters more than a marginal
+# sharpness win. (Here it costs little: t=10.00 is rank 4 of 219 anyway.)
+POSTER_MODE = "loop-start"
+
 # Encoding ladder. `width=None` means "source resolution, no scale filter".
 # Add a rung by adding a dict; nothing else needs to change.
 LADDER = [
@@ -269,8 +283,17 @@ def analyze(info):
 # STEP 1b — poster frame
 # ----------------------------------------------------------------------------
 
-def export_poster(ranked):
-    best = ranked[0]
+def export_poster(ranked, samples=None):
+    if LOOP_IN is not None and POSTER_MODE != "sharpest-overall" and samples:
+        inwin = [s for s in samples if LOOP_IN <= s["t"] <= LOOP_OUT]
+        if inwin:
+            best = (min(inwin, key=lambda s: abs(s["t"] - LOOP_IN))
+                    if POSTER_MODE == "loop-start"
+                    else max(inwin, key=lambda s: s["lapvar"]))
+        else:
+            best = ranked[0]
+    else:
+        best = ranked[0]
     cap = cv2.VideoCapture(str(SRC))
     cap.set(cv2.CAP_PROP_POS_FRAMES, best["frame"])
     ok, frame = cap.read()
@@ -285,7 +308,7 @@ def export_poster(ranked):
     img.save(webp, "WEBP", quality=POSTER_WEBP_Q, method=6)
 
     print("=" * 74)
-    print("STEP 1b — POSTER FRAME (sharpest sample, full source resolution)")
+    print("STEP 1b — POSTER FRAME (full source resolution, mode=%s)" % POSTER_MODE)
     print("=" * 74)
     print(f"  frame {best['frame']}  t={best['t']:.2f}s  lapvar={best['lapvar']:.1f}  {img.width}x{img.height}")
     print(f"  {webp.name:<24} {webp.stat().st_size/1024:>8.1f} KB   (q{POSTER_WEBP_Q})")
@@ -372,12 +395,15 @@ def loop_candidates(samples, info):
               f"{c['mean_jerk']:>10.5f}  {c['max_jerk']:>9.5f}  {c['score']:>6.3f}")
 
     best = picked[0]
-    print(f"\n  RECOMMENDED LOOP:  in={best['in']:.2f}s  out={best['out']:.2f}s  "
-          f"({best['len']:.2f}s)")
-    print(f"  NOT trimmed automatically. When you have picked one:")
-    print(f"    ffmpeg -ss {best['in']} -to {best['out']} -i assets/flyover-source.mp4 "
-          f"-an -c:v libx264 -crf 18 -preset slow -pix_fmt yuv420p "
-          f"-movflags +faststart assets/hero-loop.mp4")
+    print(f"\n  TOP CANDIDATE:  in={best['in']:.2f}s  out={best['out']:.2f}s  ({best['len']:.2f}s)")
+    if LOOP_IN is None:
+        print("  No loop selected. Set LOOP_IN / LOOP_OUT at the top of this file")
+        print("  to trim the ladder and the poster to a window.")
+    else:
+        print(f"  SELECTED (LOOP_IN/LOOP_OUT):  in={LOOP_IN:.2f}s  out={LOOP_OUT:.2f}s  "
+              f"({LOOP_OUT - LOOP_IN:.2f}s)")
+        if abs(LOOP_IN - best["in"]) > 0.01 or abs(LOOP_OUT - best["out"]) > 0.01:
+            print("  note: the selected window is not the top-scoring candidate")
     print(f"  candidates -> {REPORTS / 'loop-candidates.json'}\n")
     return picked
 
@@ -390,12 +416,20 @@ def encode(ffmpeg, info):
     print("=" * 74)
     print("STEP 1c — ENCODING LADDER")
     print("=" * 74)
+    if LOOP_IN is not None:
+        print(f"  trimmed to the chosen loop: {LOOP_IN:.2f}s -> {LOOP_OUT:.2f}s "
+              f"({LOOP_OUT - LOOP_IN:.2f}s)\n")
     src_w = info["width"]
     results = []
 
     for rung in LADDER:
         out = OUT / rung["name"]
-        cmd = [ffmpeg, "-hide_banner", "-loglevel", "error", "-y", "-i", str(SRC), "-an"]
+        cmd = [ffmpeg, "-hide_banner", "-loglevel", "error", "-y"]
+        if LOOP_IN is not None:
+            # -ss before -i for a fast seek, -t as a duration so the window is
+            # unambiguous regardless of ffmpeg's -to timeline semantics.
+            cmd += ["-ss", str(LOOP_IN), "-t", str(round(LOOP_OUT - LOOP_IN, 3))]
+        cmd += ["-i", str(SRC), "-an"]
 
         target = rung["width"]
         if target is None:
@@ -418,7 +452,19 @@ def encode(ffmpeg, info):
 
     print("\n  FILE                      SIZE       vs SOURCE   NOTE")
     src_kb = SRC.stat().st_size / 1024
-    print(f"  {'flyover-source.mp4 (src)':<24} {src_kb/1024:>7.2f} MB      —        1920x1080 h264")
+    if LOOP_IN is not None:
+        # Stream-copy the same window so the comparison is like-for-like.
+        # Pro-rating by duration would misstate it: the source bitrate is not flat.
+        tmp = OUT / ".loop-slice-ref.mp4"
+        subprocess.run([ffmpeg, "-hide_banner", "-loglevel", "error", "-y",
+                        "-ss", str(LOOP_IN), "-t", str(round(LOOP_OUT - LOOP_IN, 3)),
+                        "-i", str(SRC), "-an", "-c", "copy", str(tmp)],
+                       capture_output=True)
+        if tmp.exists():
+            src_kb = tmp.stat().st_size / 1024
+            tmp.unlink()
+    label = 'source slice (stream copy)' if LOOP_IN is not None else 'flyover-source.mp4 (src)'
+    print(f"  {label:<24} {src_kb/1024:>7.2f} MB      —        1920x1080 h264")
     for name, kb, note in results:
         print(f"  {name:<24} {kb/1024:>7.2f} MB   {kb/src_kb*100:>6.1f}%     {note}")
     print()
@@ -445,7 +491,7 @@ def main():
 
     if not args.encode_only:
         samples, ranked = analyze(info)
-        export_poster(ranked)
+        export_poster(ranked, samples)
         loop_candidates(samples, info)
 
     if not args.analyze_only:

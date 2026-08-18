@@ -1,13 +1,12 @@
 .DS_Store
 .venv/
 
-# Full-length hero encodes are 15-67 MB each — too heavy for the repo and for
-# a web hero. They are build products of prep.py from assets/flyover-source.mp4.
-# Trim to the chosen loop window first (see reports/loop-candidates.json), then
-# commit the small loop encodes and drop them from this list.
+# Full-length master. Not deployed and not needed at runtime — it is only the
+# input to prep.py. Original: ~/Downloads/GNC Flyover.mp4.txt (a real MP4
+# despite the extension). Keep a copy somewhere durable.
 assets/flyover-source.mp4
-assets/hero.av1.webm
-assets/hero.h264.mp4
+
+# Byte-for-byte identical to hero.h264.mp4: the source is 1920 wide, so the
+# ladder's "scale to 1920" rung is a no-op and we never upscale. Nothing loads
+# it — the sub-1280px tier uses hero-1280.*. prep.py still regenerates it.
 assets/hero-1080.mp4
-assets/hero-1280.av1.webm
-assets/hero-1280.mp4

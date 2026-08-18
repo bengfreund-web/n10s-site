@@ -70,10 +70,37 @@ not installed it falls back to parsing `ffmpeg -i` for the same fields.
 
 Source is 1920x1080, 29.97fps, h264 High, yuv420p, bt709, 54.65s, no audio.
 
-**The hero footage is not trimmed yet.** `prep.py` reports loop candidates
-rather than cutting one, and the full-length encodes are gitignored because
-they are 15–67 MB. Pick a window from `reports/loop-candidates.json`, trim, and
-commit the small result. The recommended window is 10.00s → 18.75s.
+**Hero loop: 10.00s → 18.75s** (8.75s), the top-scoring candidate — highest
+median sharpness of the window search and near-lowest shake. It is set as
+`LOOP_IN` / `LOOP_OUT` at the top of `prep.py`, so the ladder and the poster
+both trim to it; set them to `None` to go back to the full source.
+
+The poster is the loop's **first** frame, not the sharpest frame overall, so
+there is no jump when playback starts (`POSTER_MODE`, which also accepts
+`sharpest-in-loop` and `sharpest-overall`). It costs almost nothing here —
+t=10.00 ranks 4th of 219 samples anyway.
+
+Encoded ladder, against a stream copy of the same window (7.62 MB):
+
+| file | size | vs slice | served to |
+|---|---|---|---|
+| `hero.av1.webm` | 10.90 MB | 143% | ≥1280px, first choice |
+| `hero.h264.mp4` | 12.01 MB | 158% | ≥1280px, fallback |
+| `hero-1280.av1.webm` | 2.77 MB | 36% | <1280px, first choice |
+| `hero-1280.mp4` | 3.48 MB | 46% | <1280px, fallback |
+| `hero-1080.mp4` | 12.01 MB | 158% | nothing — gitignored duplicate |
+
+The two full-res rungs are still bigger than the source slice: at CRF 28 / 18
+the encoder spends bits preserving the master's own compression artifacts.
+Raising them in `LADDER` (AV1 ~34–36, x264 ~23) roughly halves both with no
+visible loss on a muted background loop — a one-line change per rung.
+
+`hero-1080.mp4` is byte-for-byte identical to `hero.h264.mp4`: the source is
+1920 wide, the rung asks for 1920 wide, and we never upscale. Nothing loads it
+and it is gitignored; the sub-1280px tier uses `hero-1280.*`.
+
+Encoded durations come out at 8.78s rather than 8.75s — frame quantisation at
+29.97fps (263 frames).
 
 ## Local preview
 
@@ -163,9 +190,9 @@ All generated from `~/Downloads/National 10s Logo.png`. Regenerating them needs 
   sentence is the only reference.
 - **FAQ answers** for cost, format, and sanctioning are placeholders pending confirmed details
   (Phase 2).
-- **Hero footage is untrimmed.** Full-length encodes are gitignored; the site will fall back to
-  the poster still until a trimmed loop is committed.
-- **Encoding ladder CRFs.** At the specified CRF 28 (AV1) / CRF 18 (x264) every rung comes out
-  larger than the source, which is already a 4.5 Mbps delivery file. See the ladder report.
+- **Encoding ladder CRFs.** The two full-res rungs are still ~1.5x the source slice at CRF 28 /
+  18. See the ladder table above for the one-line fix if you want them smaller.
+- **`assets/flyover-source.mp4` is gitignored** (29 MB, only an input to `prep.py`). Original is
+  `~/Downloads/GNC Flyover.mp4.txt` — a real MP4 despite the extension. Keep a durable copy.
 - **HUD label** reads "BOZEMAN SPORTS PARK / BOZEMAN, MONTANA". Swap in exact coordinates in
   `HUD_LABEL_2` if you want them — I did not invent a lat/long.
