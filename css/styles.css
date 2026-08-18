@@ -234,70 +234,168 @@ p { margin: 0 0 1em; }
   margin-top: 8px;
 }
 
-/* ---------- Hero ---------- */
+/* ==========================================================================
+   HERO SCROLL SEQUENCE
+   Tall track + sticky pin, driven by one normalised progress value.
+   Stage thresholds, focus regions and tuning live in js/hero-sequence.js.
+   ========================================================================== */
 
-.hero {
-  position: relative;
-  background: linear-gradient(155deg, #24540a 0%, var(--primary) 45%, var(--primary-dark) 100%);
-  color: var(--white);
-  padding: 84px 0 96px;
-  overflow: hidden;
+/* Scan-reveal duotone: monochrome forest -> off-white. Deliberately no warm
+   hues; a saturated edge pass over grass reads as compression glitching. */
+:root {
+  --scan-shadow: #0a1a00;
+  --scan-mid:    #1b3d00;
+  --scan-hi:     #f5f6f7;
+  --scan-edge:   #ffffff;
+
+  /* Kept in sync with TRACK_VH / TRACK_VH_MOBILE in js/hero-sequence.js */
+  --track-vh: 400;
 }
 
-.hero::after {
-  content: "";
+.skip-link {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 5px;
-  background: var(--accent);
+  left: 16px;
+  top: -60px;
+  z-index: 999;
+  background: var(--primary);
+  color: var(--white);
+  font-weight: 600;
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  transition: top 0.18s ease;
+}
+.skip-link:focus { top: 16px; }
+
+.hero-track {
+  position: relative;
+  height: calc(var(--track-vh) * 1vh);
 }
 
-.hero-inner {
-  position: relative;
-  max-width: 780px;
+.hero-pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--primary-dark);
 }
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+  transform-origin: 50% 50%;
+}
+
+.hero-media video,
+.hero-media .hero-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-poster { display: none; }
+
+/* Poster-only mode: reduced motion, Save-Data / 2g-3g, or a small screen */
+body.poster-only .hero-media video { display: none; }
+body.poster-only .hero-poster { display: block; }
+body.poster-only #scanCanvas,
+body.poster-only #hud { display: none !important; }
+
+/* Scan-reveal canvas: same box as the video, half internal resolution */
+#scanCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+}
+
+/* SVG HUD above the canvas. Neutral strokes only. */
+#hud {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+}
+#hud .hud-stroke { fill: none; stroke: rgba(255,255,255,0.9); stroke-width: 2; }
+#hud .hud-tick   { stroke: rgba(255,255,255,0.55); stroke-width: 1.5; }
+#hud .hud-scan   { stroke: rgba(255,255,255,0.85); stroke-width: 1.5; }
+#hud .hud-scan-glow { fill: url(#scanGrad); }
+#hud text {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  fill: rgba(255,255,255,0.92);
+  letter-spacing: 0.08em;
+}
+#hud .hud-label-bg { fill: rgba(16,38,0,0.8); stroke: rgba(255,255,255,0.28); stroke-width: 1; }
+
+/* Gradient scrim, fades up under the type in stage B */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  will-change: opacity;
+  background:
+    linear-gradient(to top, rgba(16,38,0,0.94) 0%, rgba(16,38,0,0.58) 45%, rgba(16,38,0,0) 80%),
+    linear-gradient(to right, rgba(16,38,0,0.72) 0%, rgba(16,38,0,0) 58%);
+}
+
+/* Hero copy: always in the DOM, only ever transformed */
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 11vh;
+  will-change: transform, opacity;
+  color: var(--white);
+}
+
+.hero-line { will-change: transform, opacity; }
 
 .hero-mark {
-  width: min(360px, 72vw);
-  margin-bottom: 34px;
+  width: min(300px, 62vw);
+  margin-bottom: 26px;
 }
 
-.hero .eyebrow { color: var(--accent); }
-
-.hero h1 {
-  font-size: clamp(2.6rem, 6.4vw, 4.4rem);
-  color: var(--white);
-  margin-bottom: 0.3em;
+.hero-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.05;
   text-transform: uppercase;
-}
-
-.hero-sub {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.88);
-  max-width: 54ch;
-  margin-bottom: 2em;
+  color: var(--white);
+  margin: 0 0 0.25em;
+  max-width: 18ch;
 }
 
 .hero-date {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 700;
-  font-size: clamp(1.5rem, 3.4vw, 2.35rem);
+  font-size: clamp(1.4rem, 3.2vw, 2.2rem);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--white);
-  margin: 0 0 0.15em;
+  margin: 0 0 0.1em;
 }
-
 .hero-date span { color: var(--accent); }
 
-.hero-location {
+.hero-location,
+.hero-venue {
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255,255,255,0.82);
   margin: 0;
 }
 
@@ -306,7 +404,93 @@ p { margin: 0 0 1em; }
   height: 4px;
   border-radius: 2px;
   background: var(--accent);
-  margin: 26px 0 24px;
+  margin: 22px 0 20px;
+}
+
+.hero-sub {
+  font-size: 1.12rem;
+  color: rgba(255,255,255,0.9);
+  max-width: 54ch;
+  margin: 0 0 1.9em;
+}
+
+/* Stage C info links */
+.hero-links { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-links a {
+  will-change: transform, opacity;
+  display: inline-block;
+  padding: 11px 22px;
+  border-radius: var(--radius);
+  border: 2px solid rgba(255,255,255,0.5);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.hero-links a:hover { background: rgba(255,255,255,0.14); border-color: var(--white); }
+.hero-links a.is-primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: inset 4px 0 0 var(--accent);
+}
+.hero-links a.is-primary:hover { background: #2a5c00; border-color: #2a5c00; }
+
+/* A keyboard user can Tab in before stage C reveals these. Inline styles set
+   opacity/transform, so this needs !important to win. */
+.hero-links a:focus-visible,
+.hero-content a:focus-visible {
+  opacity: 1 !important;
+  transform: none !important;
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Stage A scroll cue */
+.scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 36px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 12px;
+  will-change: opacity;
+}
+.scroll-cue span {
+  display: block;
+  width: 4px;
+  height: 8px;
+  margin: 6px auto 0;
+  border-radius: 2px;
+  background: var(--accent);
+  animation: cue 1.8s ease infinite;
+}
+@keyframes cue {
+  0%   { opacity: 0; transform: translateY(0); }
+  35%  { opacity: 1; }
+  70%  { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 0; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue span { animation: none; opacity: 1; }
+}
+
+/* Page content rises over the hero during stage D. --main-pull is set from
+   JS so the overlap begins exactly at D_START. */
+#top {
+  position: relative;
+  z-index: 3;
+  background: var(--off-white);
+  margin-top: calc(var(--main-pull, 0) * -1vh);
+  will-change: transform;
+}
+
+@media (max-width: 767px) {
+  :root { --track-vh: 200; }
+  .hero-content { padding-bottom: 8vh; }
+  .hero-mark { width: min(240px, 62vw); margin-bottom: 18px; }
+  .hero-divider { margin: 16px 0 14px; }
 }
 
 /* ---------- Stats bar ---------- */

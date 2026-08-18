@@ -1,1 +1,13 @@
 .DS_Store
+.venv/
+
+# Full-length hero encodes are 15-67 MB each — too heavy for the repo and for
+# a web hero. They are build products of prep.py from assets/flyover-source.mp4.
+# Trim to the chosen loop window first (see reports/loop-candidates.json), then
+# commit the small loop encodes and drop them from this list.
+assets/flyover-source.mp4
+assets/hero.av1.webm
+assets/hero.h264.mp4
+assets/hero-1080.mp4
+assets/hero-1280.av1.webm
+assets/hero-1280.mp4

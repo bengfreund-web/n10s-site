@@ -12,12 +12,68 @@ label + Title Case headline pairs, three about badges, arrow-link action cards, 
 "Resources / Plan Your Trip" block, and an event line + link columns in the footer.
 
 ```
-index.html          the whole page
-css/styles.css      brand tokens + all styles
-js/main.js          nav, scroll progress, reveal-on-scroll, interest form
-scripts/            Google Apps Script endpoint for the form (not served)
-img/                logo, icons, OG image, photos
+index.html            the whole page
+css/styles.css        brand tokens + all styles
+js/main.js            nav, scroll progress, reveal-on-scroll, interest form
+js/hero-sequence.js   pinned video hero: stages, scan reveal, HUD
+prep.py               footage analysis + encoding ladder
+scripts/              Google Apps Script endpoint for the form (not served)
+img/                  logo, icons, OG image, photos
+assets/               hero footage, poster stills, encodes (large ones gitignored)
+reports/              sharpness.csv, loop-candidates.json from prep.py
 ```
+
+## Hero scroll sequence
+
+A 400vh track (200vh under 768px) with a sticky 100svh pin. One normalised
+progress value drives four stages, all thresholds named at the top of
+`js/hero-sequence.js`:
+
+| Stage | p | What happens |
+|---|---|---|
+| A | 0.00–0.20 | Footage only. Scroll cue, no text, no scrim. |
+| B | 0.20–0.45 | Scrim fades up, heading lines enter staggered; scan reveal runs. |
+| C | 0.45–0.75 | Info links enter on the same rhythm; heading lifts to make room. |
+| D | 0.75–1.00 | Hero fades and scales down, page rises over it, pin releases. |
+
+Only `transform` and `opacity` are animated. Scroll is throttled through
+requestAnimationFrame and layout is never read in the handler — geometry is
+cached in `measure()` on resize.
+
+**Scan reveal.** One `<video>` plus one `<canvas>` (never two stacked videos —
+they drift). Per frame the canvas draws the video, clips to a focus region,
+and applies contrast → duotone → Sobel edges; everything outside the region
+stays transparent. An SVG HUD adds corner brackets, edge ticks, a scan line
+tied to scroll position, and a monospace label. `FOCUS_REGIONS` is an array of
+normalised `{x,y,w,h}` rects that cycle across stage B.
+
+**Budgets.** Canvas loop capped at 30fps, rendered at half resolution and
+upscaled by CSS, and killed entirely outside stage B, when the tab is hidden,
+or when the hero leaves the viewport. The video pauses once fully covered.
+
+**Fallbacks.** `prefers-reduced-motion`, Save-Data / 2g-3g, and viewports under
+768px all get the poster still: the `<source>` elements are detached so nothing
+downloads at all. Hero copy is in the DOM at all times and only ever
+transformed, so keyboard and screen reader users get everything without
+scrolling; there is a skip link, and focused hero links are forced visible
+regardless of stage.
+
+## Footage prep
+
+```bash
+python3 prep.py                 # probe + sharpness + loop candidates + poster + ladder
+python3 prep.py --analyze-only  # no encoding
+```
+
+Needs `cv2`, `Pillow`, and an ffmpeg with libx264 + libsvtav1. If `ffprobe` is
+not installed it falls back to parsing `ffmpeg -i` for the same fields.
+
+Source is 1920x1080, 29.97fps, h264 High, yuv420p, bt709, 54.65s, no audio.
+
+**The hero footage is not trimmed yet.** `prep.py` reports loop candidates
+rather than cutting one, and the full-length encodes are gitignored because
+they are 15–67 MB. Pick a window from `reports/loop-candidates.json`, trim, and
+commit the small result. The recommended window is 10.00s → 18.75s.
 
 ## Local preview
 
@@ -107,3 +163,9 @@ All generated from `~/Downloads/National 10s Logo.png`. Regenerating them needs 
   sentence is the only reference.
 - **FAQ answers** for cost, format, and sanctioning are placeholders pending confirmed details
   (Phase 2).
+- **Hero footage is untrimmed.** Full-length encodes are gitignored; the site will fall back to
+  the poster still until a trimmed loop is committed.
+- **Encoding ladder CRFs.** At the specified CRF 28 (AV1) / CRF 18 (x264) every rung comes out
+  larger than the source, which is already a 4.5 Mbps delivery file. See the ladder report.
+- **HUD label** reads "BOZEMAN SPORTS PARK / BOZEMAN, MONTANA". Swap in exact coordinates in
+  `HUD_LABEL_2` if you want them — I did not invent a lat/long.

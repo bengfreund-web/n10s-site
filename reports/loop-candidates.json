@@ -1,0 +1,62 @@
+[
+  {
+    "in": 10.0,
+    "out": 18.75,
+    "len": 8.75,
+    "median_sharpness": 970.7,
+    "min_sharpness": 816.4,
+    "mean_jerk": 0.000224,
+    "max_jerk": 0.000534,
+    "score": 0.9968
+  },
+  {
+    "in": 15.0,
+    "out": 23.0,
+    "len": 8.0,
+    "median_sharpness": 930.9,
+    "min_sharpness": 743.0,
+    "mean_jerk": 0.00021,
+    "max_jerk": 0.000495,
+    "score": 0.9356
+  },
+  {
+    "in": 22.5,
+    "out": 30.5,
+    "len": 8.0,
+    "median_sharpness": 897.6,
+    "min_sharpness": 743.0,
+    "mean_jerk": 0.000139,
+    "max_jerk": 0.000324,
+    "score": 0.8866
+  },
+  {
+    "in": 5.0,
+    "out": 13.0,
+    "len": 8.0,
+    "median_sharpness": 890.6,
+    "min_sharpness": 758.8,
+    "mean_jerk": 0.000152,
+    "max_jerk": 0.000334,
+    "score": 0.8753
+  },
+  {
+    "in": 0.0,
+    "out": 8.0,
+    "len": 8.0,
+    "median_sharpness": 890.6,
+    "min_sharpness": 759.7,
+    "mean_jerk": 0.000165,
+    "max_jerk": 0.000313,
+    "score": 0.8748
+  },
+  {
+    "in": 26.75,
+    "out": 34.75,
+    "len": 8.0,
+    "median_sharpness": 850.7,
+    "min_sharpness": 541.2,
+    "mean_jerk": 0.003652,
+    "max_jerk": 0.023353,
+    "score": 0.6803
+  }
+]

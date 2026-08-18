@@ -31,6 +31,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#top">Skip to main content</a>
+
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <header class="site-header">
@@ -51,22 +53,75 @@
   </div>
 </header>
 
-<main id="top">
+  <!-- ======================================================================
+       HERO SCROLL SEQUENCE
+       Tall track + sticky pin. One <video> as the base layer and one <canvas>
+       on top (never two stacked videos — they drift). Every stage is driven
+       off a single normalised progress value; see js/hero-sequence.js.
+       ====================================================================== -->
+  <div class="hero-track" id="heroTrack">
+    <div class="hero-pin" id="heroPin">
 
-  <section class="hero">
-    <div class="wrap hero-inner">
-      <img class="hero-mark" src="img/n10s-logo-white.png" alt="" aria-hidden="true">
-      <h1 class="reveal">National 10s Rugby Championship</h1>
-      <p class="hero-date reveal">MAY <span>15&ndash;16</span>, 2027</p>
-      <p class="hero-location reveal">Bozeman Sports Park &middot; Bozeman, MT</p>
-      <div class="hero-divider reveal"></div>
-      <p class="hero-sub reveal">The national 10s championship for developing boys programs &mdash; two days of middle school and U16/JV competition in the heart of Big Sky country.</p>
-      <div class="hero-actions reveal">
-        <a class="btn btn-primary" href="#interest">Team Expression of Interest</a>
-        <a class="btn btn-ghost" href="#divisions">See Divisions</a>
+      <div class="hero-media" id="heroMedia">
+        <!-- preload="none" and no autoplay attribute on purpose: nothing is
+             fetched until pickSources() has chosen a tier, so poster-only
+             clients (reduced motion, Save-Data, small screens) pay nothing. -->
+        <video id="heroVideo" muted loop playsinline preload="none"
+               poster="assets/hero-poster.jpg" aria-hidden="true" tabindex="-1">
+          <!-- AV1 first. The `media` attribute on <source> is specced but
+               ignored by shipping browsers, so pickSources() rebuilds this
+               list from matchMedia at runtime; this markup is the no-JS path. -->
+          <source src="assets/hero.av1.webm" type="video/webm; codecs=av01.0.05M.08" media="(min-width: 1280px)">
+          <source src="assets/hero.h264.mp4" type="video/mp4; codecs=avc1.640028" media="(min-width: 1280px)">
+          <source src="assets/hero-1280.av1.webm" type="video/webm; codecs=av01.0.05M.08">
+          <source src="assets/hero-1280.mp4" type="video/mp4; codecs=avc1.640028">
+        </video>
+        <img class="hero-poster" src="assets/hero-poster.webp" alt="" aria-hidden="true">
       </div>
+
+      <canvas id="scanCanvas" aria-hidden="true"></canvas>
+
+      <svg id="hud" aria-hidden="true" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.18"/>
+          </linearGradient>
+        </defs>
+        <g id="hudBrackets"></g>
+        <g id="hudTicks"></g>
+        <g id="hudScan"></g>
+        <g id="hudLabel"></g>
+      </svg>
+
+      <div class="hero-scrim" id="heroScrim"></div>
+
+      <!-- Copy is in the DOM at all times and never hidden from AT; it is
+           only ever transformed, so keyboard and screen reader users get the
+           whole hero without scrolling. -->
+      <div class="hero-content" id="heroContent">
+        <div class="wrap">
+          <img class="hero-mark hero-line" src="img/n10s-logo-white.png" alt="" aria-hidden="true">
+          <h1 class="hero-title hero-line">National 10s Rugby Championship</h1>
+          <p class="hero-date hero-line">MAY <span>15&ndash;16</span>, 2027</p>
+          <p class="hero-venue hero-line">Bozeman Sports Park &middot; Bozeman, MT</p>
+          <div class="hero-divider hero-line"></div>
+          <p class="hero-sub hero-line">The national 10s championship for developing boys programs &mdash; two days of middle school and U16/JV competition in the heart of Big Sky country.</p>
+          <nav class="hero-links" id="heroLinks" aria-label="Championship sections">
+            <a href="#championship">About</a>
+            <a href="#divisions">Divisions</a>
+            <a href="#why-10s">Why 10s</a>
+            <a href="#resources">Plan Your Trip</a>
+            <a href="#interest" class="is-primary">Register Interest</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="scroll-cue" id="scrollCue" aria-hidden="true"><span></span></div>
     </div>
-  </section>
+  </div>
+
+<main id="top">
 
   <div class="stats-bar">
     <div class="stat"><span class="stat-num">2</span><span class="stat-label">Days</span></div>
@@ -391,5 +446,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script src="js/hero-sequence.js"></script>
 </body>
 </html>
