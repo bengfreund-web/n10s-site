@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://n10srugby.github.io/sitemap.xml
+Sitemap: https://bengfreund-web.github.io/n10s-site/sitemap.xml

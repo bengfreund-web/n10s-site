@@ -179,16 +179,14 @@ Express Interest link.
 
 ## Deploy
 
-GitHub Pages from the repo root on the default branch, same as `varsity-rugby-site`.
+Live at **https://bengfreund-web.github.io/n10s-site/** — GitHub Pages from the repo root on
+`main`, same pattern as `varsity-rugby-site`.
 
-Before going live, replace the placeholder URL `https://n10srugby.github.io/` in:
-
-- `index.html` — `<link rel="canonical">`, `og:url`, `og:image`, `twitter:image`
-- `sitemap.xml`
-- `robots.txt`
-
-If a custom domain is used, add a `CNAME` file at the repo root with the bare domain. There is
-deliberately no `CNAME` in the repo yet — an unregistered domain in that file breaks the site.
+Canonical, `og:url`, `og:image`, `twitter:image`, `sitemap.xml` and `robots.txt` all point at that
+address. **If a custom domain is added**, update all six and add a `CNAME` file at the repo root
+with the bare domain — otherwise search engines keep indexing the github.io URL and the two
+compete. There is deliberately no `CNAME` yet: an unregistered domain in that file breaks the
+site.
 
 ## Assets
 
