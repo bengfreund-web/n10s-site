@@ -327,12 +327,12 @@ body.poster-only .hero-poster { display: block; }
 
 .hero-line { will-change: transform, opacity; }
 
-/* Pre-paint state. Without this the hero copy and links paint fully opaque
-   over an unscrimmed frame, then snap to 0 the moment render() first runs —
-   that was the flash on load. Gated on `.js` so a no-JS visitor still sees
-   everything. */
-.js .hero-line,
-.js .hero-mark {
+/* Pre-paint state. Without this the hero copy paints fully opaque over an
+   unscrimmed frame, then snaps to 0 the moment render() first runs — that was
+   the flash on load. Gated on `.js` so a no-JS visitor still sees everything. */
+.js .hero-line { opacity: 0; }
+
+.hero-mark {
   width: min(300px, 62vw);
   margin-bottom: 26px;
 }

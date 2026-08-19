@@ -68,6 +68,14 @@ The hero used to carry its own row of nav links across the top. It duplicated
 the sticky header sitting directly above it, so it was removed; the header
 covers that navigation at every scroll position.
 
+**The page always starts at the top.** Browsers restore the previous scroll
+position on reload and on back/forward, which with a pinned sequence drops you
+into the middle of it — type already revealed, footage paused, looking broken.
+`scrollRestoration` is set to `manual` and the page is scrolled to 0 on load,
+plus again on `pageshow` for back/forward-cache restores. A URL with a hash is
+honoured instead, jumped to with `behavior: "instant"` (`"auto"` defers to the
+CSS `scroll-behavior: smooth`, which is the animation being avoided).
+
 **The pin is `100svh`, so the hero copy has to fit it.** On a short window it
 outgrows the pin and gets clipped from the top — the mark disappears first,
 which looks like a broken layout. Two media queries handle it: below 700px

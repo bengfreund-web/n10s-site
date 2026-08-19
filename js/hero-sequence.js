@@ -308,6 +308,41 @@
     window.addEventListener(evt, retryPlayOnce, { passive: true, once: true });
   });
 
+  /* Browsers restore the previous scroll position on reload and on back/forward,
+     which with a pinned sequence drops you into the middle of it — type already
+     revealed, footage paused, looking broken. Always begin at the top, unless
+     the URL points at a section (a deep link or the skip link), which the
+     visitor asked for. */
+  function startAtTop() {
+    if (location.hash) {
+      /* Honour the deep link, but land on it explicitly. `scroll-behavior:
+         smooth` animates the browser's own fragment jump, and the hero's
+         sticky pin means a half-finished animation can leave you nowhere
+         useful. An instant jump after layout is settled is deterministic. */
+      var target = document.getElementById(location.hash.slice(1));
+      /* "auto" defers to CSS scroll-behavior, which is smooth here — that is
+         the animation we are trying to avoid. "instant" forces the jump. */
+      if (target) target.scrollIntoView({ behavior: "instant", block: "start" });
+      return;
+    }
+    window.scrollTo(0, 0);
+  }
+
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = location.hash ? "auto" : "manual";
+  }
+  startAtTop();
+
+  /* Restoring from the back/forward cache re-runs none of the above, so redo
+     it and get the footage going again. */
+  window.addEventListener("pageshow", function (e) {
+    if (!e.persisted) return;
+    startAtTop();
+    applyMode();
+    measure();
+    onScroll();
+  });
+
   applyMode();
   measure();
   onScroll();
