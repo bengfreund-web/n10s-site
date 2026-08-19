@@ -80,15 +80,29 @@ def main():
         im.save(dst, optimize=True)
         return dst
 
+    # Derive the embed list from the markup, so a photo added to the page can
+    # never silently fall out of the build.
+    html_src = (ROOT / "index.html").read_text()
+    referenced = sorted(set(re.findall(r'(?:src|poster)="((?:img|assets)/[^"]+)"', html_src)))
+
     poster = shrink(ROOT / "assets/hero-poster.jpg", "poster.jpg", 1280)
     assets = {
-        "img/n10s-logo.png":           uri(shrink_png(ROOT / "img/n10s-logo.png", "logo.png"), "image/png"),
-        "img/n10s-logo-white.png":     uri(shrink_png(ROOT / "img/n10s-logo-white.png", "logo-w.png"), "image/png"),
-        "img/action-1.jpg":            uri(shrink(ROOT / "img/action-1.jpg", "action.jpg", 900), "image/jpeg"),
-        "img/bozeman-sports-park.jpg": uri(shrink(ROOT / "img/bozeman-sports-park.jpg", "park.jpg", 1100), "image/jpeg"),
-        "assets/hero-poster.jpg":      uri(poster, "image/jpeg"),
-        "assets/hero-poster.webp":     uri(poster, "image/jpeg"),
+        "assets/hero-poster.jpg":  uri(poster, "image/jpeg"),
+        "assets/hero-poster.webp": uri(poster, "image/jpeg"),
     }
+    for rel in referenced:
+        if rel in assets or rel.endswith((".mp4", ".webm")):
+            continue
+        src = ROOT / rel
+        if not src.exists():
+            sys.exit(f"referenced but missing: {rel}")
+        name = rel.replace("/", "_")
+        if rel.endswith(".png"):
+            assets[rel] = uri(shrink_png(src, name), "image/png")
+        else:
+            assets[rel] = uri(shrink(src, name + ".jpg", 1100), "image/jpeg")
+        print(f"  embedded {rel}")
+
     video_uri = uri(vid, "video/mp4")
 
     # --- fonts ---------------------------------------------------------------
