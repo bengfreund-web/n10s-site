@@ -11,11 +11,11 @@ first thing under the hero is a four-fact row — **format, age groups, cost,
 location** — and each card links to the section that answers it in full.
 Depth increases as you scroll:
 
-`Basics → Divisions → Squad Size → Entry Fee → Expression of Interest → Plan Your Trip → FAQ`
+`Basics → Divisions → venue photo → Squad Size + Entry Fee → Expression of Interest → Plan Your Trip → FAQ`
 
-Photos sit outside that path so they never interrupt the scan: the match shot
-breaks the page after the form, and the venue photo lives inside Plan Your
-Trip, where location questions get answered.
+Squad size and entry fee share one row — the two numbers that decide whether a
+program can come, read together. The venue photo breaks the run of fact
+sections; the match shot is a small closing note before the footer.
 
 ```
 index.html            the whole page
@@ -44,6 +44,15 @@ progress value drives four stages, all thresholds named at the top of
 
 Stage A is deliberately short — roughly 8vh of scroll — so the footage plays
 clean for a moment and the type arrives on the first nudge.
+
+**First-paint state matters here.** The hero copy is hidden by CSS behind a
+`js` class set in `<head>` before first paint, and `--main-pull` is seeded in
+CSS to the value `measure()` computes. Without those two, the copy painted
+fully opaque over an unscrimmed frame and then snapped to zero, and the page
+content jumped up ~38vh, the moment JS took over — the flash on load. If
+`D_START` or the track length changes, update the seeded `--main-pull` to
+match, and `hero-sequence.js` drops the `js` class if the hero is absent so
+the copy is never stranded invisible.
 
 Only `transform` and `opacity` are animated. Scroll is throttled through
 requestAnimationFrame and layout is never read in the handler — geometry is

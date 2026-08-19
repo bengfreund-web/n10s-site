@@ -50,7 +50,13 @@
   /* ====================================================================== */
 
   const track   = document.getElementById("heroTrack");
-  if (!track) return;
+  if (!track) {
+    /* CSS hides the hero copy while `js` is present, on the promise that this
+       script will animate it back. If the hero is not here, drop the promise
+       so the copy is never left invisible. */
+    document.documentElement.classList.remove("js");
+    return;
+  }
 
   const pin     = document.getElementById("heroPin");
   const media   = document.getElementById("heroMedia");

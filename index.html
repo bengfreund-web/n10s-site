@@ -29,6 +29,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
+<!-- Set before first paint: CSS hides the hero copy only when JS is
+     available to animate it back in, so nothing flashes on load and
+     no-JS users still get the full hero. -->
+<script>document.documentElement.className += " js";</script>
 </head>
 <body>
 
@@ -128,8 +132,8 @@
         </a>
         <a class="basic reveal" href="#divisions">
           <span class="basic-label">Age Groups</span>
-          <span class="basic-value">MS &amp; U16/JV</span>
-          <span class="basic-note">Middle school boys and U16/JV boys</span>
+          <span class="basic-value">Middle School &amp; U16</span>
+          <span class="basic-note">Boys teams, school-based or club</span>
         </a>
         <a class="basic reveal" href="#cost">
           <span class="basic-label">Cost</span>
@@ -145,54 +149,50 @@
     </div>
   </section>
 
-  <section id="divisions" class="section">
+  <section id="divisions" class="section divisions-section">
     <div class="wrap">
       <p class="eyebrow reveal">Divisions</p>
-      <h2 class="reveal">Who Takes the Pitch</h2>
+      <h2 class="reveal section-title-sm">Who Takes the Pitch</h2>
 
-      <div class="card-grid two">
-        <div class="card reveal">
-          <span class="icon-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 20v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </span>
+      <div class="division-row">
+        <div class="division reveal">
           <h3>Middle School Boys</h3>
-          <p>School and club programs at the middle school level, from any state.</p>
-          <p class="card-note">Age bands and eligibility published with registration.</p>
+          <p>School and club programs, any state.</p>
         </div>
-        <div class="card reveal">
-          <span class="icon-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
-          </span>
+        <div class="division reveal">
           <h3>U16 / JV Boys</h3>
-          <p>High school JV sides and U16 club teams, from any state.</p>
-          <p class="card-note">Age bands and eligibility published with registration.</p>
+          <p>High school JV sides and U16 club teams, any state.</p>
         </div>
       </div>
+      <p class="division-note reveal">Age bands and eligibility published with registration.</p>
     </div>
   </section>
 
-  <section id="roster" class="section roster-section">
-    <div class="wrap">
-      <p class="eyebrow reveal">Squad Size</p>
-      <h2 class="reveal">Fifteen Players Maximum</h2>
-      <div class="roster-card reveal">
-        <p class="roster-figure">15<span>players per team, maximum</span></p>
-        <p class="roster-note">Ten on the pitch and up to five replacements. A smaller travelling
-        squad is the point of 10s &mdash; it puts a national event within reach of programs that
-        could not fill a 15s roster, let alone fly one across the country.</p>
-      </div>
-    </div>
-  </section>
+  <figure class="photo-band photo-figure reveal">
+    <img src="img/bozeman-sports-park.jpg"
+         alt="Aerial view of the rugby pitches at Bozeman Sports Park, with the Bridger range on the horizon"
+         loading="lazy" width="1920" height="1080">
+    <figcaption>Bozeman Sports Park, Bozeman, Montana.</figcaption>
+  </figure>
 
-  <section id="cost" class="section section-alt cost-section">
+  <section id="cost" class="section section-alt essentials-section">
     <div class="wrap">
-      <p class="eyebrow reveal">Entry Fee</p>
-      <h2 class="reveal">What It Costs</h2>
-      <div class="cost-card reveal">
-        <p class="cost-amount">$750<span>per team</span></p>
-        <p class="cost-note">Covers entry for one team across both days. Travel, lodging and
-        meals are not included. Payment is taken at registration, not with the expression of
-        interest &mdash; that stays free.</p>
+      <p class="eyebrow reveal">Squad &amp; Cost</p>
+      <h2 class="reveal section-title-sm">What You Bring, What You Pay</h2>
+
+      <div class="essentials-grid">
+        <div class="essential reveal" id="roster">
+          <p class="essential-figure">15<span>players max</span></p>
+          <p class="essential-note">Ten on the pitch and up to five replacements. A smaller
+          travelling squad is the point of 10s &mdash; it puts a national event within reach of
+          programs that could not fly a 15s roster across the country.</p>
+        </div>
+        <div class="essential reveal">
+          <p class="essential-figure">$750<span>per team</span></p>
+          <p class="essential-note">Entry for one team across both days. Travel, lodging and meals
+          are not included. Payment is taken at registration, not with the expression of interest
+          &mdash; that stays free.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -295,21 +295,12 @@
     </div>
   </section>
 
-  <div class="photo-band photo-band-small reveal">
-    <img src="img/action-1.jpg" alt="A youth rugby player breaks away with the ball in hand during a match" loading="lazy">
-  </div>
 
   <section id="resources" class="section">
     <div class="wrap">
       <p class="eyebrow reveal">Resources</p>
       <h2 class="reveal">Plan Your Trip</h2>
 
-      <figure class="photo-band photo-figure reveal">
-    <img src="img/bozeman-sports-park.jpg"
-         alt="Aerial view of the rugby pitches at Bozeman Sports Park, with the Bridger range on the horizon"
-         loading="lazy" width="1920" height="1080">
-    <figcaption>Bozeman Sports Park, Bozeman, Montana.</figcaption>
-      </figure>
 
       <div class="resource-grid">
         <div class="resource reveal">
@@ -397,6 +388,10 @@
       </div>
     </div>
   </section>
+
+  <div class="photo-band photo-band-tiny reveal">
+    <img src="img/action-1.jpg" alt="A youth rugby player breaks away with the ball in hand during a match" loading="lazy">
+  </div>
 
 </main>
 
