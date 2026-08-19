@@ -15,7 +15,11 @@ Depth increases as you scroll:
 
 Squad size and entry fee share one row — the two numbers that decide whether a
 program can come, read together. The venue photo breaks the run of fact
-sections; the match shot is a small closing note before the footer.
+sections; three match photos close the page as a strip before the footer.
+
+Match photos are boys sides only. The 2027 divisions are boys, so girls'
+fixtures on the page would misrepresent the event — worth remembering when
+pulling more from the Gallatin Wranglers album, which is mostly the girls' side.
 
 ```
 index.html            the whole page

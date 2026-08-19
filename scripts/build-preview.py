@@ -126,8 +126,11 @@ def main():
     body = html[html.index("<body>") + len("<body>"):html.index("</body>")]
     body = re.sub(r'\s*<script src="js/[^"]+"></script>', "", body)
 
+    # The `js` class is set in <head> on the real page; the shell is stripped
+    # here, so re-emit it first or the hero copy flashes on load.
     OUT.write_text(
         "<title>N10s Rugby Championship</title>\n"
+        "<script>document.documentElement.className += ' js';</script>\n"
         "<style>\n" + font_css + "\n\n" + css + "\n</style>\n"
         + body.strip() + "\n\n"
         "<script>\n" + main_js + "\n</script>\n"

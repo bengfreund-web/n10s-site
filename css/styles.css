@@ -1182,12 +1182,32 @@ a.card-link:hover { text-decoration: underline; }
   color: var(--gray);
 }
 
-/* ---------- Closing match photo, small ---------- */
+/* ---------- Match photo strip ---------- */
 
-.photo-band-tiny {
-  max-width: 380px;
+.photo-strip {
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 24px 64px;
+  padding: 8px 24px 72px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.photo-strip figure { margin: 0; }
+
+.photo-strip img {
+  width: 100%;
+  /* height:auto is required — the width/height attributes on the <img> are a
+     specified height otherwise, and aspect-ratio only applies when one axis
+     is auto. Without it the tiles render at full photo height. */
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+@media (max-width: 720px) {
+  .photo-strip { grid-template-columns: 1fr; gap: 12px; padding-bottom: 48px; }
 }
 
 @media (max-width: 860px) {
