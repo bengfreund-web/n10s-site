@@ -68,6 +68,16 @@ The hero used to carry its own row of nav links across the top. It duplicated
 the sticky header sitting directly above it, so it was removed; the header
 covers that navigation at every scroll position.
 
+**The pin is `100svh`, so the hero copy has to fit it.** On a short window it
+outgrows the pin and gets clipped from the top — the mark disappears first,
+which looks like a broken layout. Two media queries handle it: below 700px
+tall the mark is dropped and the type tightens, below 520px the standfirst goes
+too. Check a short window after any change to the hero copy.
+
+The scrim also drops its left-to-right gradient below 900px wide. That gradient
+reaches 58% across, which on a narrow viewport covered almost the whole frame
+and hid the footage entirely.
+
 **First-paint state matters here.** The hero copy is hidden by CSS behind a
 `js` class set in `<head>` before first paint, and `--main-pull` is seeded in
 CSS to the value `measure()` computes. Without those two, the copy painted

@@ -433,11 +433,23 @@ body.poster-only .hero-poster { display: block; }
   will-change: transform;
 }
 
+/* The side gradient reaches 58% across, which on a narrow viewport is nearly
+   the whole width — the footage disappeared behind it. Vertical only below
+   900px; the bottom fade still carries the type. */
+@media (max-width: 900px) {
+  .hero-scrim {
+    background: linear-gradient(to top,
+      rgba(16,38,0,0.92) 0%, rgba(16,38,0,0.5) 50%, rgba(16,38,0,0) 85%);
+  }
+}
+
 @media (max-width: 767px) {
   :root { --track-vh: 150; --main-pull: 19; }
   .hero-content { padding-bottom: 8vh; }
-  .hero-mark { width: min(240px, 62vw); margin-bottom: 18px; }
-  .hero-divider { margin: 16px 0 14px; }
+  .hero-mark { width: min(190px, 48vw); margin-bottom: 12px; }
+  .hero-title { font-size: clamp(1.85rem, 7.5vw, 2.6rem); }
+  .hero-sub { font-size: 1rem; margin-bottom: 1.3em; }
+  .hero-divider { margin: 14px 0 12px; }
 }
 
 /* ---------- About badges ---------- */
@@ -1000,7 +1012,7 @@ a.card-link:hover { text-decoration: underline; }
 }
 
 /* The venue photo now lives inside Plan Your Trip */
-#resources .photo-figure { padding: 0; margin-bottom: 2.25rem; }
+#resources .photo-figure { padding: 0; margin: 0 auto 2.25rem; max-width: 820px; }
 
 /* Two-step explainer above the interest form */
 .enter-steps {
@@ -1151,8 +1163,8 @@ a.card-link:hover { text-decoration: underline; }
   padding: 0 24px 72px;
 }
 
-.photo-band.photo-wide { max-width: 1000px; }
-.photo-band.photo-tall { max-width: 430px; }
+.photo-band.photo-wide { max-width: 820px; }
+.photo-band.photo-tall { max-width: 330px; }
 
 .photo-band.photo-wide img,
 .photo-band.photo-tall img {
@@ -1162,7 +1174,7 @@ a.card-link:hover { text-decoration: underline; }
 }
 
 .photo-pair {
-  max-width: var(--max-width);
+  max-width: 900px;
   margin: 0 auto;
   padding: 8px 24px 72px;
   display: grid;
@@ -1253,7 +1265,7 @@ a.card-link:hover { text-decoration: underline; }
 }
 
 /* The venue photo now lives inside Plan Your Trip */
-#resources .photo-figure { padding: 0; margin-bottom: 2.25rem; }
+#resources .photo-figure { padding: 0; margin: 0 auto 2.25rem; max-width: 820px; }
 
 /* Two-step explainer above the interest form */
 .enter-steps {
@@ -1401,4 +1413,21 @@ a.card-link:hover { text-decoration: underline; }
   .division-row,
   .essentials-grid,
   .resource-grid { grid-template-columns: 1fr; }
+}
+
+/* The pin is 100svh, so on a short window the hero copy outgrows it and is
+   clipped from the top — the mark goes first. Drop the mark there (the H1
+   carries the name) and tighten the rest so everything fits. */
+@media (max-height: 700px) {
+  .hero-mark { display: none; }
+  .hero-content { padding-bottom: 5vh; }
+  .hero-title { font-size: clamp(1.6rem, 5vw, 2.3rem); margin-bottom: 0.18em; }
+  .hero-date { font-size: clamp(1.15rem, 2.6vw, 1.7rem); }
+  .hero-venue { font-size: 0.92rem; }
+  .hero-sub { font-size: 0.95rem; margin-bottom: 1em; }
+  .hero-divider { margin: 10px 0 9px; }
+}
+
+@media (max-height: 520px) {
+  .hero-sub { display: none; }
 }
