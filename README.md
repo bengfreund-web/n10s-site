@@ -13,6 +13,16 @@ Depth increases as you scroll:
 
 `Basics → Divisions → venue photo → Squad Size + Entry Fee → Expression of Interest → Plan Your Trip → FAQ`
 
+Divisions run U16 first, then middle school, in every place the pair appears —
+the section, the Basics card, the form's select, the FAQ and the meta
+descriptions.
+
+**Age bands are a draft.** They were derived from the usual USA Rugby
+convention of taking age at 1 September preceding the season (1 September 2026
+for a May 2027 event): U16 born on or after 1 September 2010, middle school
+born on or after 1 September 2012. The page says so and marks them provisional
+until registration opens. Confirm the cutoff convention before that changes.
+
 Squad size and entry fee share one row — the two numbers that decide whether a
 program can come, read together. The venue photo breaks the run of fact
 sections; three match photos close the page as a strip before the footer.

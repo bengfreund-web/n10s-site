@@ -1127,6 +1127,13 @@ a.card-link:hover { text-decoration: underline; }
 
 .division p { margin: 0; font-size: 0.9rem; color: var(--gray); }
 
+/* The age band is the line a coach is actually looking for, so it leads. */
+.division-band {
+  font-weight: 600;
+  color: var(--accent-text) !important;
+  margin: 0 0 4px !important;
+}
+
 .division-note {
   margin: 14px 0 0;
   font-size: 0.85rem;
