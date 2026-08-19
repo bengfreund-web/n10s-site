@@ -24,8 +24,13 @@ born on or after 1 September 2012. The page says so and marks them provisional
 until registration opens. Confirm the cutoff convention before that changes.
 
 Squad size and entry fee share one row — the two numbers that decide whether a
-program can come, read together. The venue photo breaks the run of fact
-sections; three match photos close the page as a strip before the footer.
+program can come, read together.
+
+Photos are spread through the page rather than stacked at the end, and each
+placement suits the shape of the photo: the scrum is a wide landscape band
+under the Basics row, the venue shot sits after Divisions, the ball carrier is
+a narrow portrait after Squad + Cost, and the stiffarm and score close the page
+as a landscape pair.
 
 Match photos are boys sides only. The 2027 divisions are boys, so girls'
 fixtures on the page would misrepresent the event — worth remembering when
