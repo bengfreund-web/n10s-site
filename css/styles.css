@@ -332,9 +332,7 @@ body.poster-only .hero-poster { display: block; }
    that was the flash on load. Gated on `.js` so a no-JS visitor still sees
    everything. */
 .js .hero-line,
-.js .hero-links a { opacity: 0; }
-
-.hero-mark {
+.js .hero-mark {
   width: min(300px, 62vw);
   margin-bottom: 26px;
 }
@@ -385,54 +383,8 @@ body.poster-only .hero-poster { display: block; }
   margin: 0 0 1.9em;
 }
 
-/* Stage C info links — a single row across the top of the hero.
-   Sits below the sticky header; scrolls horizontally rather than wrapping so
-   it always reads as one line. */
-.hero-links {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 4;
-  padding: calc(var(--header-h) + 14px) 0 14px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.hero-links::-webkit-scrollbar { display: none; }
-
-.hero-links-inner {
-  max-width: none;
-  padding: 0 48px;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-end;
-  gap: 10px;
-  width: max-content;
-  min-width: 100%;
-}
-.hero-links a {
-  will-change: transform, opacity;
-  display: inline-block;
-  white-space: nowrap;
-  padding: 10px 20px;
-  border-radius: var(--radius);
-  border: 2px solid rgba(255,255,255,0.5);
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--white);
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-.hero-links a:hover { background: rgba(255,255,255,0.14); border-color: var(--white); }
-.hero-links a.is-primary {
-  background: var(--primary);
-  border-color: var(--primary);
-  box-shadow: inset 4px 0 0 var(--accent);
-}
-.hero-links a.is-primary:hover { background: #2a5c00; border-color: #2a5c00; }
-
-/* A keyboard user can Tab in before stage C reveals these. Inline styles set
-   opacity/transform, so this needs !important to win. */
-.hero-links a:focus-visible,
+/* Hero copy is opacity-animated, so a focused link inside it could be
+   invisible. Force it visible. */
 .hero-content a:focus-visible {
   opacity: 1 !important;
   transform: none !important;
@@ -967,7 +919,6 @@ a.card-link:hover { text-decoration: underline; }
 
   .wordmark img { height: 38px; }
   .site-header .wrap { padding: 0 20px; }
-  .hero-links-inner { padding: 0 20px; }
 
   .hero { padding: 56px 0 64px; }
   .hero-mark { margin-bottom: 24px; }

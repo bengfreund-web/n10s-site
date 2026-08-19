@@ -53,11 +53,15 @@ progress value drives four stages, all thresholds named at the top of
 |---|---|---|
 | A | 0.00–0.08 | Footage only. Scroll cue, no text, no scrim. |
 | B | 0.08–0.34 | Scrim fades up, heading lines enter staggered. |
-| C | 0.34–0.62 | Info links enter on the same rhythm; heading lifts to make room. |
+| C | 0.34–0.62 | Heading lifts slightly. |
 | D | 0.62–1.00 | Hero fades and scales down, page rises over it, pin releases. |
 
 Stage A is deliberately short — roughly 8vh of scroll — so the footage plays
 clean for a moment and the type arrives on the first nudge.
+
+The hero used to carry its own row of nav links across the top. It duplicated
+the sticky header sitting directly above it, so it was removed; the header
+covers that navigation at every scroll position.
 
 **First-paint state matters here.** The hero copy is hidden by CSS behind a
 `js` class set in `<head>` before first paint, and `--main-pull` is seeded in

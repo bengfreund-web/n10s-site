@@ -66,6 +66,8 @@
   const cue     = document.getElementById("scrollCue");
   const main    = document.getElementById("top");
   const lines   = Array.from(document.querySelectorAll(".hero-line"));
+  /* The hero used to carry its own nav row; it duplicated the sticky header,
+     so it was removed. Stage C now only lifts the heading. */
   const linkEls = Array.from(document.querySelectorAll("#heroLinks a"));
 
 
