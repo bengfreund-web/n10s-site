@@ -313,6 +313,14 @@ body.poster-only .hero-poster { display: block; }
     linear-gradient(to right, rgba(16,38,0,0.72) 0%, rgba(16,38,0,0) 58%);
 }
 
+/* The hero runs wider than the 1120px content column and lines up with the
+   header gutter, so the headline gets room instead of wrapping tightly. */
+.hero-content .wrap {
+  max-width: 1320px;
+  padding-left: 48px;
+  padding-right: 48px;
+}
+
 /* Hero copy: always in the DOM, only ever transformed */
 .hero-content {
   position: absolute;
@@ -345,7 +353,7 @@ body.poster-only .hero-poster { display: block; }
   text-transform: uppercase;
   color: var(--white);
   margin: 0 0 0.25em;
-  max-width: 18ch;
+  max-width: 22ch;
 }
 
 .hero-date {
@@ -379,7 +387,7 @@ body.poster-only .hero-poster { display: block; }
 .hero-sub {
   font-size: 1.12rem;
   color: rgba(255,255,255,0.9);
-  max-width: 54ch;
+  max-width: 62ch;
   margin: 0 0 1.9em;
 }
 
@@ -1014,45 +1022,6 @@ a.card-link:hover { text-decoration: underline; }
 /* The venue photo now lives inside Plan Your Trip */
 #resources .photo-figure { padding: 0; margin: 0 auto 2.25rem; max-width: 820px; }
 
-/* Two-step explainer above the interest form */
-.enter-steps {
-  list-style: none;
-  margin: 1.5rem 0 0;
-  padding: 0;
-  display: grid;
-  gap: 10px;
-  max-width: 62ch;
-  counter-reset: step;
-}
-
-.enter-steps li {
-  position: relative;
-  padding-left: 40px;
-  color: var(--gray);
-  font-size: 0.98rem;
-  counter-increment: step;
-}
-
-.enter-steps li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: var(--white);
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.enter-steps strong { color: var(--primary); font-weight: 600; }
-
 /* ---------- Squad size ---------- */
 
 
@@ -1158,21 +1127,10 @@ a.card-link:hover { text-decoration: underline; }
    and a two-up pair of landscapes. */
 
 .photo-band.photo-wide,
-.photo-band.photo-tall {
-  margin: 0 auto;
-  padding: 0 24px 72px;
-}
+.photo-band.photo-wide { max-width: 700px; }
 
-.photo-band.photo-wide { max-width: 820px; }
-.photo-band.photo-tall { max-width: 330px; }
 
 .photo-band.photo-wide img,
-.photo-band.photo-tall img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius);
-}
-
 .photo-pair {
   max-width: 900px;
   margin: 0 auto;
@@ -1196,8 +1154,7 @@ a.card-link:hover { text-decoration: underline; }
 
 @media (max-width: 720px) {
   .photo-pair { grid-template-columns: 1fr; gap: 12px; padding-bottom: 48px; }
-  .photo-band.photo-wide,
-  .photo-band.photo-tall { padding-bottom: 48px; }
+  .photo-band.photo-wide { padding-bottom: 48px; }
 }
 
 /* ---------- Entry fee ---------- */
@@ -1266,45 +1223,6 @@ a.card-link:hover { text-decoration: underline; }
 
 /* The venue photo now lives inside Plan Your Trip */
 #resources .photo-figure { padding: 0; margin: 0 auto 2.25rem; max-width: 820px; }
-
-/* Two-step explainer above the interest form */
-.enter-steps {
-  list-style: none;
-  margin: 1.5rem 0 0;
-  padding: 0;
-  display: grid;
-  gap: 10px;
-  max-width: 62ch;
-  counter-reset: step;
-}
-
-.enter-steps li {
-  position: relative;
-  padding-left: 40px;
-  color: var(--gray);
-  font-size: 0.98rem;
-  counter-increment: step;
-}
-
-.enter-steps li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: var(--white);
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.enter-steps strong { color: var(--primary); font-weight: 600; }
 
 /* ---------- Squad size ---------- */
 
@@ -1430,4 +1348,31 @@ a.card-link:hover { text-decoration: underline; }
 
 @media (max-height: 520px) {
   .hero-sub { display: none; }
+}
+
+/* ---------- Expression of interest: form with the photo alongside ---------- */
+
+.interest-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: 36px;
+  align-items: start;
+  margin-top: 1.6rem;
+}
+
+.interest-photo { margin: 0; }
+
+.interest-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+}
+
+@media (max-width: 900px) {
+  .interest-layout { grid-template-columns: 1fr; gap: 26px; }
+  .interest-photo { max-width: 300px; }
+}
+
+@media (max-width: 1180px) {
+  .hero-content .wrap { max-width: none; }
 }

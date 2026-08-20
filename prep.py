@@ -61,19 +61,22 @@ LOOP_IN, LOOP_OUT = 10.00, 18.75
 # sharpness win. (Here it costs little: t=10.00 is rank 4 of 219 anyway.)
 POSTER_MODE = "loop-start"
 
+# Light sharpening applied to every rung; set to None to disable.
+UNSHARP = "unsharp=5:5:0.45:5:5:0.0"
+
 # Encoding ladder. `width=None` means "source resolution, no scale filter".
 # Add a rung by adding a dict; nothing else needs to change.
 LADDER = [
     {
         "name": "hero.av1.webm",
         "width": None,
-        "args": ["-c:v", "libsvtav1", "-crf", "24", "-preset", "5",
+        "args": ["-c:v", "libsvtav1", "-crf", "26", "-preset", "4",
                  "-pix_fmt", "yuv420p", "-svtav1-params", "tune=0"],
     },
     {
         "name": "hero.h264.mp4",
         "width": None,
-        "args": ["-c:v", "libx264", "-crf", "16", "-preset", "slow",
+        "args": ["-c:v", "libx264", "-crf", "18", "-preset", "slow",
                  "-pix_fmt", "yuv420p", "-movflags", "+faststart"],
     },
     {
@@ -92,13 +95,13 @@ LADDER = [
     {
         "name": "hero-1280.av1.webm",
         "width": 1280,
-        "args": ["-c:v", "libsvtav1", "-crf", "30", "-preset", "5",
+        "args": ["-c:v", "libsvtav1", "-crf", "32", "-preset", "4",
                  "-pix_fmt", "yuv420p"],
     },
     {
         "name": "hero-1280.mp4",
         "width": 1280,
-        "args": ["-c:v", "libx264", "-crf", "20", "-preset", "slow",
+        "args": ["-c:v", "libx264", "-crf", "22", "-preset", "slow",
                  "-pix_fmt", "yuv420p", "-movflags", "+faststart"],
     },
 ]
@@ -432,13 +435,23 @@ def encode(ffmpeg, info):
         cmd += ["-i", str(SRC), "-an"]
 
         target = rung["width"]
+        chain = []
         if target is None:
             note = "source resolution"
         elif target >= src_w:
             note = f"requested {target}w >= source {src_w}w — no scale filter (never upscale)"
         else:
-            cmd += ["-vf", f"scale={target}:-2:flags=lanczos"]
+            chain.append(f"scale={target}:-2:flags=lanczos")
             note = f"scaled to {target}w"
+        # A light unsharp pass. The master is a 4.5 Mbps delivery file, so extra
+        # bitrate mostly preserves its existing artefacts; sharpening is what
+        # actually reads as a crisper hero. Kept mild to avoid ringing on the
+        # pitch lines.
+        if UNSHARP:
+            chain.append(UNSHARP)
+            note += " + unsharp"
+        if chain:
+            cmd += ["-vf", ",".join(chain)]
 
         cmd += rung["args"] + [str(out)]
         print(f"  {rung['name']}  ({note})")

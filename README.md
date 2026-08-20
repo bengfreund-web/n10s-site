@@ -27,10 +27,10 @@ Squad size and entry fee share one row — the two numbers that decide whether a
 program can come, read together.
 
 Photos are spread through the page rather than stacked at the end, and each
-placement suits the shape of the photo: the scrum is a wide landscape band
-under the Basics row, the venue shot sits after Divisions, the ball carrier is
-a narrow portrait after Squad + Cost, and the stiffarm and score close the page
-as a landscape pair.
+placement suits the shape of the photo: the scrum is a landscape band under the
+Basics row, the venue shot sits after Divisions, the ball carrier runs as a
+portrait column beside the interest form, and the stiffarm and score close the
+page as a landscape pair.
 
 Match photos are boys sides only. The 2027 divisions are boys, so girls'
 fixtures on the page would misrepresent the event — worth remembering when
@@ -142,13 +142,21 @@ Encoded ladder, against a stream copy of the same window (7.62 MB):
 
 | file | size | vs slice | served to |
 |---|---|---|---|
-| `hero.av1.webm` | 13.48 MB | 177% | ≥1280px, first choice |
-| `hero.h264.mp4` | 15.12 MB | 198% | ≥1280px, fallback |
-| `hero-1280.av1.webm` | 4.24 MB | 56% | <1280px, first choice |
-| `hero-1280.mp4` | 6.52 MB | 86% | <1280px, fallback |
-| `hero-1080.mp4` | 12.01 MB | 158% | nothing — gitignored |
+| `hero.av1.webm` | 16.28 MB | 214% | ≥1280px, first choice |
+| `hero.h264.mp4` | 18.26 MB | 239% | ≥1280px, fallback |
+| `hero-1280.av1.webm` | 5.32 MB | 70% | <1280px, first choice |
+| `hero-1280.mp4` | 6.45 MB | 85% | <1280px, fallback |
+| `hero-1080.mp4` | 18.26 MB | 239% | nothing — gitignored |
 
-CRFs are AV1 24 / x264 16 at full res and AV1 30 / x264 20 at 1280. The 1280
+Every rung gets a light `unsharp=5:5:0.45` pass. The master is a 4.5 Mbps
+delivery file, so extra bitrate mostly preserves its existing artefacts —
+sharpening is what actually reads as a crisper hero. Measured on a hero frame,
+Laplacian variance goes 914 → 1637. It is not free: sharpening adds
+high-frequency detail that costs bitrate, so the CRFs were raised to
+compensate. At `unsharp 0.7` with CRF 20/14 the h264 rung hit 29 MB, which
+would have hurt first load more than the sharpness helped.
+
+CRFs are AV1 26 / x264 18 at full res, AV1 32 / x264 22 at 1280. The 1280
 rung was lifted hardest because the hero now plays on small screens too, so
 that tier is what most viewports actually see. Quality is capped by the master
 (a 4.5 Mbps 1080p delivery file) — lowering CRF further mostly preserves its
