@@ -11,7 +11,12 @@ first thing under the hero is a four-fact row — **format, age groups, cost,
 location** — and each card links to the section that answers it in full.
 Depth increases as you scroll:
 
-`Basics → Divisions → venue photo → Squad Size + Entry Fee → Expression of Interest → Plan Your Trip → FAQ`
+`Basics → Divisions → venue photo → Squad and Cost → Expression of Interest → Plan Your Trip → FAQ`
+
+Expression of Interest is deliberately a shallow block of its own — a heading,
+the control, and a small photo alongside, on white so it reads as separate from
+Plan Your Trip below it. No standfirst: the surrounding sections already say
+the interest form is free and non-committal.
 
 Divisions run U16 first, then middle school, in every place the pair appears —
 the section, the Basics card, the form's select, the FAQ and the meta

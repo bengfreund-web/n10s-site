@@ -645,7 +645,13 @@ a.card-link:hover { text-decoration: underline; }
 
 /* ---------- Interest form ---------- */
 
-.form-section { background: var(--off-white); }
+/* Its own block: white against the off-white sections either side, and kept
+   deliberately shallow — it is a heading, a control and a photo. */
+.form-section {
+  padding: 36px 0;
+}
+
+.form-section h2 { margin-bottom: 0.35em; }
 
 .eoi-form {
   margin-top: 2.25rem;
@@ -752,7 +758,7 @@ a.card-link:hover { text-decoration: underline; }
 /* Stands in for the form until FORM_ENDPOINT is set. It holds a single
    button, so no card chrome — the button is the whole message. */
 .form-fallback {
-  margin-top: 2rem;
+  margin-top: 0;
   max-width: 760px;
 }
 
@@ -1354,10 +1360,10 @@ a.card-link:hover { text-decoration: underline; }
 
 .interest-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 290px;
-  gap: 36px;
-  align-items: start;
-  margin-top: 1.6rem;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 30px;
+  align-items: center;
+  margin-top: 1.1rem;
 }
 
 .interest-photo { margin: 0; }
@@ -1369,8 +1375,8 @@ a.card-link:hover { text-decoration: underline; }
 }
 
 @media (max-width: 900px) {
-  .interest-layout { grid-template-columns: 1fr; gap: 26px; }
-  .interest-photo { max-width: 300px; }
+  .interest-layout { grid-template-columns: 1fr; gap: 22px; }
+  .interest-photo { max-width: 150px; }
 }
 
 @media (max-width: 1180px) {
