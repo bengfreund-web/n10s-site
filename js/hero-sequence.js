@@ -45,6 +45,13 @@
   const MAIN_RISE_PX    = 40;     /* extra rise applied to the page content */
 
   const MOBILE_BP            = 768;    /* "small screen" threshold */
+  const FULLRES_MIN_WIDTH    = 1024;   /* at or above this, serve the full-res rung */
+
+  /* Loading screen: hold the page until the hero has actually buffered, so the
+     first thing anyone sees is the full-resolution film rather than a poster
+     snapping to video. Never open-ended — LOADER_TIMEOUT_MS is the hard stop. */
+  const LOADER_TIMEOUT_MS    = 20000;
+  const LOADER_TARGET        = 0.995;  /* buffered fraction counted as "loaded" */
   const POSTER_ONLY_UNDER_BP = false;  /* true = poster still below MOBILE_BP */
 
   /* ====================================================================== */
@@ -136,7 +143,7 @@
       return;
     }
 
-    const wide = window.matchMedia("(min-width: 1280px)").matches;
+    const wide = window.matchMedia("(min-width: " + FULLRES_MIN_WIDTH + "px)").matches;
     const list = wide
       ? [["assets/hero.av1.webm",      'video/webm; codecs="av01.0.05M.08"'],
          ["assets/hero.h264.mp4",      'video/mp4; codecs="avc1.640028"']]
@@ -251,6 +258,63 @@
      INIT
      ====================================================================== */
 
+  /* ---- loading screen ---------------------------------------------------- */
+
+  var loader = document.getElementById("siteLoader");
+  var loaderFill = document.getElementById("loaderFill");
+  var loaderPct = document.getElementById("loaderPct");
+  var loaderDone = false;
+  var loaderTimer = 0;
+  var loaderPoll = 0;
+
+  function dismissLoader() {
+    if (loaderDone) return;
+    loaderDone = true;
+    clearTimeout(loaderTimer);
+    clearInterval(loaderPoll);
+    if (loaderFill) loaderFill.style.width = "100%";
+    if (loaderPct) loaderPct.textContent = "100%";
+    if (loader) loader.classList.add("is-done");
+    /* The sequence must begin at stage A whatever happened while loading. */
+    startAtTop();
+    onScroll();
+    if (!posterOnly()) {
+      var pl = video.play();
+      if (pl && pl.catch) pl.catch(function () {});
+    }
+  }
+
+  function bufferedFraction() {
+    if (!video.duration || !isFinite(video.duration)) return 0;
+    var end = 0;
+    for (var i = 0; i < video.buffered.length; i++) {
+      end = Math.max(end, video.buffered.end(i));
+    }
+    return Math.min(1, end / video.duration);
+  }
+
+  function setLoaderProgress(f) {
+    if (loaderFill) loaderFill.style.width = (f * 100).toFixed(1) + "%";
+    if (loaderPct) loaderPct.textContent = Math.round(f * 100) + "%";
+  }
+
+  function startLoader() {
+    if (!loader) return;
+    /* Nothing to wait for when no video will be fetched. */
+    if (posterOnly()) { dismissLoader(); return; }
+
+    loaderTimer = setTimeout(dismissLoader, LOADER_TIMEOUT_MS);
+    video.addEventListener("error", dismissLoader);
+    video.addEventListener("canplaythrough", function () {
+      if (bufferedFraction() >= LOADER_TARGET) dismissLoader();
+    });
+    loaderPoll = setInterval(function () {
+      var f = bufferedFraction();
+      setLoaderProgress(f);
+      if (f >= LOADER_TARGET) dismissLoader();
+    }, 120);
+  }
+
   function applyMode() {
     document.body.classList.toggle("poster-only", posterOnly());
     pickSources();
@@ -346,4 +410,5 @@
   applyMode();
   measure();
   onScroll();
+  startLoader();
 })();

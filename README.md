@@ -121,6 +121,27 @@ transformed, so keyboard and screen reader users get everything without
 scrolling; there is a skip link, and focused hero links are forced visible
 regardless of stage.
 
+## Loading screen
+
+The hero is held behind a full-screen loader — mark, progress bar, percentage —
+until the footage has actually buffered, so the first thing anyone sees is the
+full-resolution film rather than a poster snapping to video. Progress is read
+from `video.buffered`, not faked.
+
+It can never trap anyone: it dismisses on `LOADER_TIMEOUT_MS` (20s), on a video
+error, and immediately for poster-only clients who fetch no video at all. It is
+shown by CSS only when the `js` class is present, so a no-JS visitor never sees
+it. Because quality now takes priority over load speed, `FULLRES_MIN_WIDTH` was
+lowered from 1280 to 1024 — more viewports get the full-res rung.
+
+## Cache busting
+
+**Run `python3 scripts/bump-assets.py` before pushing any change to `css/` or
+`js/`.** GitHub Pages caches those files beyond a push, so a returning visitor
+keeps running the old ones. This cost real debugging time once: the loader
+looked completely broken in the browser while the served file was correct — it
+was a stale cached `hero-sequence.js`.
+
 ## Footage prep
 
 ```bash

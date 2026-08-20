@@ -8,6 +8,16 @@
    ------------------------------------------------------------------ */
 var FORM_ENDPOINT = "";
 
+/* ------------------------------------------------------------------
+   Google Form for expressions of interest.
+
+   Paste the form's /viewform URL here. Both the "here" link under the
+   heading and the button beneath it will point at it, and the button
+   relabels itself. While this is empty they both fall back to email,
+   so neither is ever a dead control.
+   ------------------------------------------------------------------ */
+var INTEREST_FORM_URL = "";
+
 document.addEventListener("DOMContentLoaded", function () {
   var toggle = document.getElementById("navToggle");
   var nav = document.getElementById("siteNav");
@@ -60,6 +70,19 @@ document.addEventListener("DOMContentLoaded", function () {
   var status = document.getElementById("formStatus");
   var submit = document.getElementById("eoiSubmit");
   if (!form) return;
+
+  /* Point the inline link and the button at the Google Form when there is one. */
+  var formLink = document.getElementById("interestFormLink");
+  if (INTEREST_FORM_URL) {
+    var cta = fallback.querySelector("a");
+    [formLink, cta].forEach(function (el) {
+      if (!el) return;
+      el.href = INTEREST_FORM_URL;
+      el.target = "_blank";
+      el.rel = "noopener";
+    });
+    if (cta) cta.textContent = "Open the form";
+  }
 
   if (!FORM_ENDPOINT) {
     form.hidden = true;

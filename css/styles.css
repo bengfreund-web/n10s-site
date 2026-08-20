@@ -254,6 +254,67 @@ p { margin: 0 0 1em; }
   --header-h: 66px;
 }
 
+/* ---------- Loading screen ----------
+   Only ever shown when JS is there to dismiss it. Fixed above everything,
+   painted in the brand dark so there is no white flash before it appears. */
+
+.site-loader { display: none; }
+
+.js .site-loader {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  background: var(--primary-dark);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.js .site-loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-mark {
+  width: min(280px, 58vw);
+  height: auto;
+}
+
+.loader-bar {
+  width: min(320px, 62vw);
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+.loader-fill {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.loader-pct {
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, "SF Mono", Menlo, monospace);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .site-loader { transition: none; }
+  .loader-fill { transition: none; }
+}
+
 .skip-link {
   position: absolute;
   left: 16px;
@@ -651,7 +712,17 @@ a.card-link:hover { text-decoration: underline; }
   padding: 36px 0;
 }
 
-.form-section h2 { margin-bottom: 0.35em; }
+.form-section h2 { margin-bottom: 0.3em; }
+
+.form-section .lede { font-size: 1rem; margin-bottom: 0; }
+
+.interest-form-link {
+  color: var(--accent-text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.interest-form-link:hover { color: var(--primary); }
 
 .eoi-form {
   margin-top: 2.25rem;

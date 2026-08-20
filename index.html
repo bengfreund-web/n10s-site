@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css?v=1787244318">
 <!-- Set before first paint: CSS hides the hero copy only when JS is
      available to animate it back in, so nothing flashes on load and
      no-JS users still get the full hero. -->
@@ -37,6 +37,16 @@
 <body>
 
 <a class="skip-link" href="#top">Skip to main content</a>
+
+<!-- Shown while the full-resolution hero buffers. CSS reveals it only when the
+     `js` class is present, and hero-sequence.js dismisses it immediately for
+     poster-only clients, on error, or on a hard timeout — it can never trap
+     anyone behind it. -->
+<div class="site-loader" id="siteLoader" role="status" aria-label="Loading the championship film">
+  <img class="loader-mark" src="img/n10s-logo-white.png" alt="N10s Rugby Championship">
+  <div class="loader-bar"><span class="loader-fill" id="loaderFill"></span></div>
+  <p class="loader-pct" id="loaderPct">Loading&hellip;</p>
+</div>
 
 <div class="scroll-progress" id="scrollProgress"></div>
 
@@ -195,6 +205,11 @@
   <section id="interest" class="section section-alt form-section">
     <div class="wrap">
       <h2 class="reveal">Expression of Interest</h2>
+      <!-- Both this link and the button below point at INTEREST_FORM_URL in
+           js/main.js once it is set; until then they fall back to email. -->
+      <p class="lede reveal">Complete the expression of interest form
+        <a class="interest-form-link" id="interestFormLink" href="mailto:jd@sportmontana.org?subject=N10s%202027%20%E2%80%94%20Expression%20of%20Interest&amp;body=Club%20or%20school%3A%0ACity%20and%20state%3A%0ARole%3A%0ADivision%20(U16%20Boys%20%2F%20Middle%20School%20Boys%20%2F%20Both)%3A%0AEstimated%20number%20of%20teams%3A%0APhone%3A%0AAnything%20we%20should%20know%3F%3A">here</a>
+        to register your team's interest.</p>
 
       <div class="interest-layout">
         <div class="interest-main">
@@ -446,7 +461,7 @@
   </div>
 </footer>
 
-<script src="js/main.js"></script>
-<script src="js/hero-sequence.js"></script>
+<script src="js/main.js?v=1787244318"></script>
+<script src="js/hero-sequence.js?v=1787244318"></script>
 </body>
 </html>
