@@ -11,12 +11,15 @@ var FORM_ENDPOINT = "";
 /* ------------------------------------------------------------------
    Google Form for expressions of interest.
 
-   Paste the form's /viewform URL here. Both the "here" link under the
-   heading and the button beneath it will point at it, and the button
-   relabels itself. While this is empty they both fall back to email,
-   so neither is ever a dead control.
+   The site LINKS to this form rather than reproducing its questions, so
+   anything edited in Google — new questions, changed wording, closing it
+   off — is live for visitors immediately, with no change here.
+
+   While this is set it is the single source of truth: the built-in form
+   below stays hidden even if FORM_ENDPOINT is filled in, so the two can
+   never drift apart and show coaches different questions.
    ------------------------------------------------------------------ */
-var INTEREST_FORM_URL = "";
+var INTEREST_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSesvjGFhWAql7DKcQa-LUy3PEn0oo-ak7nRB9QZ2tdJltB68Q/viewform";
 
 document.addEventListener("DOMContentLoaded", function () {
   var toggle = document.getElementById("navToggle");
@@ -71,7 +74,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var submit = document.getElementById("eoiSubmit");
   if (!form) return;
 
-  /* Point the inline link and the button at the Google Form when there is one. */
+  /* The Google Form wins outright when set: point both controls at it and keep
+     the built-in form hidden, whatever FORM_ENDPOINT says. */
   var formLink = document.getElementById("interestFormLink");
   if (INTEREST_FORM_URL) {
     var cta = fallback.querySelector("a");
@@ -82,6 +86,9 @@ document.addEventListener("DOMContentLoaded", function () {
       el.rel = "noopener";
     });
     if (cta) cta.textContent = "Open the form";
+    form.hidden = true;
+    fallback.hidden = false;
+    return;
   }
 
   if (!FORM_ENDPOINT) {
