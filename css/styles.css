@@ -1191,6 +1191,8 @@ a.card-link:hover { text-decoration: underline; }
   color: var(--gray);
 }
 
+.essential .card-link { display: inline-block; margin-top: 12px; }
+
 .essential-note {
   margin: 0;
   font-size: 0.9rem;
