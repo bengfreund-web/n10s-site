@@ -1199,15 +1199,9 @@ a.card-link:hover { text-decoration: underline; }
 }
 
 /* ---------- Match photos ----------
-   Spread through the page rather than stacked at the end. Each variant suits
-   the shape of the photo it carries: a wide landscape band, a narrow portrait,
-   and a two-up pair of landscapes. */
+   The venue shot after Divisions, and a two-up pair of landscapes closing the
+   page. */
 
-.photo-band.photo-wide,
-.photo-band.photo-wide { max-width: 700px; }
-
-
-.photo-band.photo-wide img,
 .photo-pair {
   max-width: 900px;
   margin: 0 auto;
@@ -1231,7 +1225,6 @@ a.card-link:hover { text-decoration: underline; }
 
 @media (max-width: 720px) {
   .photo-pair { grid-template-columns: 1fr; gap: 12px; padding-bottom: 48px; }
-  .photo-band.photo-wide { padding-bottom: 48px; }
 }
 
 /* ---------- Entry fee ---------- */
@@ -1428,27 +1421,6 @@ a.card-link:hover { text-decoration: underline; }
 }
 
 /* ---------- Expression of interest: form with the photo alongside ---------- */
-
-.interest-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 150px;
-  gap: 30px;
-  align-items: center;
-  margin-top: 1.1rem;
-}
-
-.interest-photo { margin: 0; }
-
-.interest-photo img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius);
-}
-
-@media (max-width: 900px) {
-  .interest-layout { grid-template-columns: 1fr; gap: 22px; }
-  .interest-photo { max-width: 150px; }
-}
 
 @media (max-width: 1180px) {
   .hero-content .wrap { max-width: none; }

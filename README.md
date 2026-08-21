@@ -14,9 +14,8 @@ Depth increases as you scroll:
 `Basics → Divisions → venue photo → Squad and Cost → Expression of Interest → Plan Your Trip → FAQ`
 
 Expression of Interest is deliberately a shallow block of its own — a heading,
-the control, and a small photo alongside, on white so it reads as separate from
-Plan Your Trip below it. No standfirst: the surrounding sections already say
-the interest form is free and non-committal.
+a line pointing at the form, and the control — on white so it reads as separate
+from Plan Your Trip below it.
 
 Divisions run U16 first, then middle school, in every place the pair appears —
 the section, the Basics card, the form's select, the FAQ and the meta
@@ -31,15 +30,22 @@ until registration opens. Confirm the cutoff convention before that changes.
 Squad size and entry fee share one row — the two numbers that decide whether a
 program can come, read together.
 
-Photos are spread through the page rather than stacked at the end, and each
-placement suits the shape of the photo: the scrum is a landscape band under the
-Basics row, the venue shot sits after Divisions, the ball carrier runs as a
-portrait column beside the interest form, and the stiffarm and score close the
-page as a landscape pair.
+Two photo placements remain: the venue shot after Divisions, and a landscape
+pair closing the page. The two Wranglers shots (scrum under the Basics row,
+ball carrier beside the interest form) were removed; `img/scrum.jpg` and
+`img/carry.jpg` are deleted and recoverable from git history.
 
 Match photos are boys sides only. The 2027 divisions are boys, so girls'
 fixtures on the page would misrepresent the event — worth remembering when
 pulling more from the Gallatin Wranglers album, which is mostly the girls' side.
+
+**Deleting CSS rules by string index has bitten twice.** A selector that is
+part of a comma-separated group leaves its neighbours attached to the *next*
+rule — once merging `.js .hero-line` with `.hero-mark` and swallowing an
+`opacity: 0`, once attaching `.photo-wide` to `.photo-pair`. Remove the whole
+selector group, and check the file for merged groups afterwards. There is also
+accumulated dead CSS from removed sections (`card-grid`, `step-grid`,
+`reason-list`, `hero-actions`, `step-num`, `card-note`) worth one careful pass.
 
 ```
 index.html            the whole page
