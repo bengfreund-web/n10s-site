@@ -269,14 +269,21 @@ Express Interest link.
 
 ## Deploy
 
-Live at **https://bengfreund-web.github.io/n10s-site/** — GitHub Pages from the repo root on
-`main`, same pattern as `varsity-rugby-site`.
+Live at **https://n10srugby.org** — GitHub Pages from the repo root on `main`, same pattern as
+`varsity-rugby-site`.
 
-Canonical, `og:url`, `og:image`, `twitter:image`, `sitemap.xml` and `robots.txt` all point at that
-address. **If a custom domain is added**, update all six and add a `CNAME` file at the repo root
-with the bare domain — otherwise search engines keep indexing the github.io URL and the two
-compete. There is deliberately no `CNAME` yet: an unregistered domain in that file breaks the
-site.
+DNS is on Squarespace: four A records on the apex to the GitHub Pages IPs
+(185.199.108–111.153) and `www` CNAME to `bengfreund-web.github.io`. GitHub
+redirects `www` and the old `bengfreund-web.github.io/n10s-site` URL to the
+apex, and Let's Encrypt covers both names with HTTPS enforced.
+
+**Never edit the domain by hand** — canonical, `og:url`, `og:image`,
+`twitter:image`, `CNAME`, `sitemap.xml` and `robots.txt` all have to move
+together or link previews and search results end up split across two hosts:
+
+```bash
+python3 scripts/set-domain.py <bare-domain>
+```
 
 ## Assets
 
