@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
       el.target = "_blank";
       el.rel = "noopener";
     });
-    if (cta) cta.textContent = "Open the form";
+    if (cta) cta.textContent = "Expression of Interest Form";
     form.hidden = true;
     fallback.hidden = false;
     return;

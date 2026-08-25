@@ -714,16 +714,6 @@ a.card-link:hover { text-decoration: underline; }
 
 .form-section h2 { margin-bottom: 0.3em; }
 
-.form-section .lede { font-size: 1rem; margin-bottom: 0; }
-
-.interest-form-link {
-  color: var(--accent-text);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.interest-form-link:hover { color: var(--primary); }
-
 .eoi-form {
   margin-top: 2.25rem;
   max-width: 760px;

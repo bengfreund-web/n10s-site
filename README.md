@@ -13,9 +13,9 @@ Depth increases as you scroll:
 
 `Basics → Divisions → venue photo → Squad and Cost → Expression of Interest → Plan Your Trip → FAQ`
 
-Expression of Interest is deliberately a shallow block of its own — a heading,
-a line pointing at the form, and the control — on white so it reads as separate
-from Plan Your Trip below it.
+"Get Started" is deliberately a shallow block of its own: a heading and one
+button, nothing else, on white so it reads as separate from Plan Your Trip
+below it. The button opens the Google Form in a new tab.
 
 Divisions run U16 first, then middle school, in every place the pair appears —
 the section, the Basics card, the form's select, the FAQ and the meta
