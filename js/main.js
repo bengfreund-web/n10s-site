@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .catch(function () {
         setStatus(
-          "Something went wrong sending that. Please email jd@sportmontana.org and we will add you to the list.",
+          "Something went wrong sending that. Please email ari@sportmontana.org and we will add you to the list.",
           "error"
         );
         submit.disabled = false;

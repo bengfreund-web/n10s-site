@@ -22,13 +22,80 @@
 <meta name="twitter:image" content="https://n10srugby.org/img/og-image.png">
 <meta name="theme-color" content="#1b3d00">
 <link rel="icon" href="favicon.ico" sizes="any">
+<!-- Google prefers a multiple of 48px for the icon it shows beside a search
+     result; 16 and 32 alone gave it nothing good to pick. -->
+<link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/favicon-192.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=1787699623">
+
+<!-- Structured data. The `logo` on the Organization is what Google reads when
+     it shows a logo for the site; the favicon links above are what it reads for
+     the small icon beside a search result. Google decides whether to use either.
+     Deliberately no `offers` block: the Zeffy page lists several price tiers and
+     publishing a single figure here could contradict it. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://n10srugby.org/#organization",
+      "name": "National 10s Rugby Championship",
+      "alternateName": "N10s Rugby Championship",
+      "url": "https://n10srugby.org/",
+      "email": "ari@sportmontana.org",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://n10srugby.org/img/n10s-logo.png",
+        "width": 700,
+        "height": 518
+      },
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Montana Institute of Sport",
+        "url": "https://montanainstituteofsport.org"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://n10srugby.org/#website",
+      "url": "https://n10srugby.org/",
+      "name": "National 10s Rugby Championship",
+      "publisher": { "@id": "https://n10srugby.org/#organization" }
+    },
+    {
+      "@type": "SportsEvent",
+      "@id": "https://n10srugby.org/#event",
+      "name": "National 10s Rugby Championship 2027",
+      "description": "The national 10s championship for U16 and middle school boys rugby. Two days at Bozeman Sports Park, May 15-16, 2027. All states welcome.",
+      "sport": "Rugby union",
+      "startDate": "2027-05-15",
+      "endDate": "2027-05-16",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "url": "https://n10srugby.org/",
+      "image": [ "https://n10srugby.org/img/og-image.png" ],
+      "organizer": { "@id": "https://n10srugby.org/#organization" },
+      "location": {
+        "@type": "Place",
+        "name": "Bozeman Sports Park",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bozeman",
+          "addressRegion": "MT",
+          "addressCountry": "US"
+        }
+      }
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="css/styles.css?v=1787774286">
 <!-- Set before first paint: CSS hides the hero copy only when JS is
      available to animate it back in, so nothing flashes on load and
      no-JS users still get the full hero. -->
@@ -284,7 +351,7 @@
       <!-- Shown in place of the form until FORM_ENDPOINT is set in js/main.js.
            A live button rather than a notice, so the section still converts. -->
       <div class="form-fallback" id="formFallback" hidden>
-        <a class="btn btn-primary" href="mailto:jd@sportmontana.org?subject=N10s%202027%20%E2%80%94%20Expression%20of%20Interest&amp;body=Club%20or%20school%3A%0ACity%20and%20state%3A%0ARole%3A%0ADivision%20(U16%20Boys%20%2F%20Middle%20School%20Boys%20%2F%20Both)%3A%0AEstimated%20number%20of%20teams%3A%0APhone%3A%0AAnything%20we%20should%20know%3F%3A">Expression of Interest Form</a>
+        <a class="btn btn-primary" href="mailto:ari@sportmontana.org?subject=N10s%202027%20%E2%80%94%20Expression%20of%20Interest&amp;body=Club%20or%20school%3A%0ACity%20and%20state%3A%0ARole%3A%0ADivision%20(U16%20Boys%20%2F%20Middle%20School%20Boys%20%2F%20Both)%3A%0AEstimated%20number%20of%20teams%3A%0APhone%3A%0AAnything%20we%20should%20know%3F%3A">Expression of Interest Form</a>
       </div>
     </div>
   </section>
@@ -325,7 +392,7 @@
           </span>
           <h3>Contact</h3>
           <p>Get in touch with the championship organizing team at the Montana Institute of Sport.</p>
-          <a class="card-link" href="mailto:jd@sportmontana.org">Contact Us &rarr;</a>
+          <a class="card-link" href="mailto:ari@sportmontana.org">Contact Us &rarr;</a>
         </div>
       </div>
     </div>
@@ -431,7 +498,7 @@
       <ul>
         <li><a href="#resources">Venue</a></li>
         <li><a href="#resources">Accommodation</a></li>
-        <li><a href="mailto:jd@sportmontana.org">jd@sportmontana.org</a></li>
+        <li><a href="mailto:ari@sportmontana.org">ari@sportmontana.org</a></li>
         <li><a href="https://montanainstituteofsport.org" target="_blank" rel="noopener">Montana Institute of Sport</a></li>
         <li><a href="https://montanainstituteofsport.org/try-rugby-impact.html" target="_blank" rel="noopener">TRY Rugby</a></li>
       </ul>
@@ -443,7 +510,7 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=1787699623"></script>
-<script src="js/hero-sequence.js?v=1787699623"></script>
+<script src="js/main.js?v=1787774286"></script>
+<script src="js/hero-sequence.js?v=1787774286"></script>
 </body>
 </html>
