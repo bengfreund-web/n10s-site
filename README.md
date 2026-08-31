@@ -307,7 +307,8 @@ All generated from `~/Downloads/National 10s Logo.png`. Regenerating them needs 
 - **Analytics.** No tag on the page. The varsity site has none to carry over, so a property has
   to be created first.
 - **Socials.** Footer has no social links — no accounts identified yet.
-- **Contact email.** `ari@sportmontana.org`, transcribed from dictation — worth confirming the spelling.
+- **Contact email.** `avery@sportmontana.org`. Avery is the tournament director for inquiries,
+  per the 26 Aug 2026 call; JD was removed as the listed contact.
 - **GNC cross-promo.** The About section now mentions the Great Northwest Challenge by name (same
   valley, each summer). If that link should be stronger — a footer link to
   greatnorthwestchallenge.com, or a "sister event" band — say so; if it should be weaker, that one
