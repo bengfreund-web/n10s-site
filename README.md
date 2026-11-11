@@ -306,7 +306,24 @@ All generated from `~/Downloads/National 10s Logo.png`. Regenerating them needs 
   U16 match and sideline shots, plus a Bozeman or mountain backdrop.
 - **Analytics.** No tag on the page. The varsity site has none to carry over, so a property has
   to be created first.
-- **Socials.** Footer has no social links — no accounts identified yet.
+- **Socials.** The footer now carries one icon, linking the organiser's YouTube channel
+  (`https://www.youtube.com/@MontanaInstituteOfSport`, confirmed live via the oEmbed
+  `author_url` on the videos the sister sites embed). The championship has no Instagram
+  account of its own: `n10srugby`, `national10srugby`, `n10schampionship`, `nationaltens`,
+  `national10s`, `n10s.rugby`, `n10srugbychampionship`, `national10schampionship`,
+  `nationaltenschampionship` and `nationaltensrugby` all return "Profile isn't available"
+  logged out, and the organiser has no org-level account either (`montanainstituteofsport`,
+  `mtinstituteofsport`, `montana_institute_of_sport`, `montanayouthrugby`, `tryrugbymt` are all
+  free). The sibling events do have accounts — `@greatnorthwestchallenge` (811 followers) and
+  `@montanainvitational` (480) — but those belong to other tournaments and must not be
+  presented as this one's. A ready-to-paste Instagram anchor sits in an HTML comment beside the
+  icon row in `index.html`: swap `HANDLE` once the account exists, and check it loads in a
+  logged-out window before pushing.
+- **Sponsors.** The page has no sponsor or partner logos at all, so there is nothing unlinked.
+  When sponsors are named, copy the GNC pattern — a `.partners` section of `.partner-tile`
+  divs, each wrapping its logo in `<a target="_blank" rel="noopener">` pointing at the
+  sponsor's own site — from `~/great-northwest-challenge/index.html` and its stylesheet. The
+  tracker rule is that every sponsor logo must be a link, never a bare image.
 - **Contact email.** `avery@sportmontana.org`. Avery is the tournament director for inquiries,
   per the 26 Aug 2026 call; JD was removed as the listed contact.
 - **GNC cross-promo.** The About section now mentions the Great Northwest Challenge by name (same
