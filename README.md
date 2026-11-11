@@ -319,11 +319,14 @@ All generated from `~/Downloads/National 10s Logo.png`. Regenerating them needs 
   presented as this one's. A ready-to-paste Instagram anchor sits in an HTML comment beside the
   icon row in `index.html`: swap `HANDLE` once the account exists, and check it loads in a
   logged-out window before pushing.
-- **Sponsors.** The page has no sponsor or partner logos at all, so there is nothing unlinked.
-  When sponsors are named, copy the GNC pattern — a `.partners` section of `.partner-tile`
-  divs, each wrapping its logo in `<a target="_blank" rel="noopener">` pointing at the
-  sponsor's own site — from `~/great-northwest-challenge/index.html` and its stylesheet. The
-  tracker rule is that every sponsor logo must be a link, never a bare image.
+- **Sponsors.** A Partners band sits between `</main>` and the footer, carrying the Bozeman Area
+  Chamber of Commerce and the Montana Institute of Sport, ported from the Great Northwest
+  Challenge site so the two events match. Every logo is wrapped in an `<a target="_blank"
+  rel="noopener">` pointing at that organisation's own site, never a bare `<img>` — that is the
+  tracker rule. Adding a sponsor is one `.partner-tile` div plus a logo in `img/partners/`; use
+  the `.dark` variant for any mark that is light or knocked out, or it vanishes against the
+  white card. The `<img>` carries `width`/`height` so the row reserves its space, and
+  `.partner-tile img` bounds both axes (240x80) so a wide logo cannot push the row to wrap.
 - **Contact email.** `avery@sportmontana.org`. Avery is the tournament director for inquiries,
   per the 26 Aug 2026 call; JD was removed as the listed contact.
 - **GNC cross-promo.** The About section now mentions the Great Northwest Challenge by name (same
