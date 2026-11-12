@@ -306,18 +306,15 @@ All generated from `~/Downloads/National 10s Logo.png`. Regenerating them needs 
   U16 match and sideline shots, plus a Bozeman or mountain backdrop.
 - **Analytics.** No tag on the page. The varsity site has none to carry over, so a property has
   to be created first.
-- **Socials.** The footer carries no social icons. The championship has no Instagram account
-  of its own: `n10srugby`, `national10srugby`, `n10schampionship`, `nationaltens`,
-  `national10s`, `n10s.rugby`, `n10srugbychampionship`, `national10schampionship`,
-  `nationaltenschampionship` and `nationaltensrugby` all return "Profile isn't available"
-  logged out, and the organiser has no org-level account either (`montanainstituteofsport`,
-  `mtinstituteofsport`, `montana_institute_of_sport`, `montanayouthrugby`, `tryrugbymt` are all
-  free). The sibling events do have accounts — `@greatnorthwestchallenge` (811 followers) and
-  `@montanainvitational` (480) — but those belong to other tournaments and must not be
-  presented as this one's. A YouTube icon linking the organiser's channel shipped briefly and
-  was pulled on request, along with its `sameAs` entry. The `.footer-social` styles are still
-  in the stylesheet and a ready-to-paste block sits in an HTML comment in the footer-brand
-  div: swap `HANDLE` once an account exists, and check it loads in a logged-out window first.
+- **Socials.** The footer links `https://www.instagram.com/national10s/`, the championship's own
+  account (bio: "National 10s Rugby Tournament / May 15-16, 2027 / Bozeman, MT"), created
+  Nov 2026 and confirmed loading in a logged-out window. It is also the `sameAs` on the
+  Organization node in the structured data. The sibling events have their own accounts,
+  `@greatnorthwestchallenge` and `@montanainvitational`; those belong to other tournaments and
+  must not be presented as this one's. Rule for any icon added here: it points straight at a
+  live profile, never a search page or a platform home page, and the handle gets checked
+  logged out before it ships. A YouTube icon for the organiser's channel shipped briefly in
+  Nov 2026 and was pulled on request.
 - **Sponsors.** A Partners band sits between `</main>` and the footer, carrying the Bozeman Area
   Chamber of Commerce and the Montana Institute of Sport, ported from the Great Northwest
   Challenge site so the two events match. Every logo is wrapped in an `<a target="_blank"
